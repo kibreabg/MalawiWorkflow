@@ -1,0 +1,16 @@
+﻿------ Clean started: Project: Chai.ZADS.Modules.Inventorys, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Modules.Pharmacy, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Modules.Admin, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Modules.Location, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Modules.Patient, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Modules.Resource, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.ServerControls, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Modules.Shell, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Services, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.DataAccess, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Model, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.CoreDomain, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.DBConnection, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Shared, Configuration: Debug Any CPU ------
+------ Clean started: Project: Chai.ZADS.Enums, Configuration: Debug Any CPU ------
+========== Clean: 15 succeeded, 0 failed, 0 skipped ==========

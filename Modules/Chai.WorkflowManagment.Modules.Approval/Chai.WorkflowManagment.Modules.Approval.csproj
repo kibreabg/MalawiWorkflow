@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{01E5590D-C115-4AFD-802B-05D46F0FE13B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chai.WorkflowManagment.Modules.Approval</RootNamespace>
+    <AssemblyName>Chai.WorkflowManagment.Modules.Approval</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeWeb">
+      <HintPath>..\..\Library\Microsoft.Practices.CompositeWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeWeb.EnterpriseLibrary">
+      <HintPath>..\..\Library\Microsoft.Practices.CompositeWeb.EnterpriseLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder">
+      <HintPath>..\..\Library\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApprovalController.cs" />
+    <Compile Include="ApprovalModuleInitializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\BankPaymentApprovalPresenter.cs" />
+    <Compile Include="Views\BidAnalysisApprovalPresenter.cs" />
+    <Compile Include="Views\CostSharingApprovalPresenter.cs" />
+    <Compile Include="Views\IBankPaymentApprovalView.cs" />
+    <Compile Include="Views\IBidAnalysisView.cs" />
+    <Compile Include="Views\ICostSharingApprovalView.cs" />
+    <Compile Include="Views\IPurchaseOrderSoleVendorView.cs" />
+    <Compile Include="Views\ISoleVendorApprovalView.cs" />
+    <Compile Include="Views\OperationalControlApprovalPresenter.cs" />
+    <Compile Include="Views\IOperationalControlApprovalView.cs" />
+    <Compile Include="Views\PaymentReimbursementApprovalPresenter.cs" />
+    <Compile Include="Views\IPaymentReimbursementApprovalView.cs" />
+    <Compile Include="Views\IExpenseLiquidationApprovalView.cs" />
+    <Compile Include="Views\ILeaveApprovalView.cs" />
+    <Compile Include="Views\IPrintRequestedItemView.cs" />
+    <Compile Include="Views\IPurchaseApprovalDetailView.cs" />
+    <Compile Include="Views\IPurchaseOrderView.cs" />
+    <Compile Include="Views\LeaveApprovalPresenter.cs" />
+    <Compile Include="Views\PrintRequestedItemPresenter.cs" />
+    <Compile Include="Views\PurchaseApprovalDetailPresenter.cs" />
+    <Compile Include="Views\PurchaseOrderPresenter.cs" />
+    <Compile Include="Views\PurchaseOrderSoleVendorPresenter.cs" />
+    <Compile Include="Views\SoleVendorApprovalPresenter.cs" />
+    <Compile Include="Views\TravelAdvanceApprovalPresenter.cs" />
+    <Compile Include="Views\DefaultPresenter.cs" />
+    <Compile Include="Views\ITravelAdvanceApprovalView.cs" />
+    <Compile Include="Views\IDefaultView.cs" />
+    <Compile Include="Views\ICashPaymentApprovalView.cs" />
+    <Compile Include="Views\IVehicleApprovalView.cs" />
+    <Compile Include="Views\CashPaymentApprovalPresenter.cs" />
+    <Compile Include="Views\ExpenseLiquidationApprovalPresenter.cs" />
+    <Compile Include="Views\VehicleApprovalPresenter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.CoreDomain\Chai.WorkflowManagment.CoreDomain.csproj">
+      <Project>{20c49d35-4cea-4c93-acff-3a570ca2fed7}</Project>
+      <Name>Chai.WorkflowManagment.CoreDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Enums\Chai.WorkflowManagment.Enums.csproj">
+      <Project>{a10d850f-2040-44f8-8a6e-89ba91470fae}</Project>
+      <Name>Chai.WorkflowManagment.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Services\Chai.WorkflowManagment.Services.csproj">
+      <Project>{99145d3d-2b6d-4c6f-98a9-9bc18584bd07}</Project>
+      <Name>Chai.WorkflowManagment.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Shared\Chai.WorkflowManagment.Shared.csproj">
+      <Project>{3c1c6d3d-633e-442a-bde0-0d0b9d31fdf2}</Project>
+      <Name>Chai.WorkflowManagment.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chai.WorkflowManagment.Modules.Admin\Chai.WorkflowManagment.Modules.Admin.csproj">
+      <Project>{1b1467b4-2bf5-4824-9fac-39c36d4c6c89}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chai.WorkflowManagment.Modules.Request\Chai.WorkflowManagment.Modules.Request.csproj">
+      <Project>{88b5eb9e-0fb5-4a23-99bd-f2b3c590f92d}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Request</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chai.WorkflowManagment.Modules.Setting\Chai.WorkflowManagment.Modules.Setting.csproj">
+      <Project>{6e8e1e43-0c9b-4b03-bb95-be86d1853cea}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Setting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chai.WorkflowManagment.Modules.Shell\Chai.WorkflowManagment.Modules.Shell.csproj">
+      <Project>{b6477755-f019-42bd-b33a-592b65bc6bf9}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Shell</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties IsModuleProject="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

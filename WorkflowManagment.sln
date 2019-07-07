@@ -1,0 +1,121 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebSites", "WebSites", "{F46F1E28-4EB0-4F40-8842-9945911BD8A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{2323152C-FB9C-41D2-AC57-8BABE27D9ED1}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WorkflowManagment", "http://localhost:61090", "{CAB1B892-F12B-49E3-B9F9-14ACB5ED7DB2}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{20c49d35-4cea-4c93-acff-3a570ca2fed7}|Chai.WorkflowManagment.CoreDomain.dll;{a10d850f-2040-44f8-8a6e-89ba91470fae}|Chai.WorkflowManagment.Enums.dll;{1b1467b4-2bf5-4824-9fac-39c36d4c6c89}|Chai.WorkflowManagment.Modules.Admin.dll;{7b6c15bd-f5d5-40c3-8eaf-54d8a9328e65}|Chai.WorkflowManagment.Modules.Report.dll;{b6477755-f019-42bd-b33a-592b65bc6bf9}|Chai.WorkflowManagment.Modules.Shell.dll;{63c11ce1-4190-491b-a3cc-ca21cdfecd73}|Chai.WorkflowManagment.ServerControls.dll;{99145d3d-2b6d-4c6f-98a9-9bc18584bd07}|Chai.WorkflowManagment.Services.dll;{3c1c6d3d-633e-442a-bde0-0d0b9d31fdf2}|Chai.WorkflowManagment.Shared.dll;{6e8e1e43-0c9b-4b03-bb95-be86d1853cea}|Chai.WorkflowManagment.Modules.Setting.dll;{88b5eb9e-0fb5-4a23-99bd-f2b3c590f92d}|Chai.WorkflowManagment.Modules.Request.dll;{01e5590d-c115-4afd-802b-05d46f0fe13b}|Chai.WorkflowManagment.Modules.Approval.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_61090"
+		Debug.AspNetCompiler.PhysicalPath = "WebSites\WorkflowManagment\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61090\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_61090"
+		Release.AspNetCompiler.PhysicalPath = "WebSites\WorkflowManagment\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61090\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "WebSites\WorkflowManagment\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.CoreDomain", "Chai.WorkflowManagment.CoreDomain\Chai.WorkflowManagment.CoreDomain.csproj", "{20C49D35-4CEA-4C93-ACFF-3A570CA2FED7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Enums", "Chai.WorkflowManagment.Enums\Chai.WorkflowManagment.Enums.csproj", "{A10D850F-2040-44F8-8A6E-89BA91470FAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Shared", "Chai.WorkflowManagment.Shared\Chai.WorkflowManagment.Shared.csproj", "{3C1C6D3D-633E-442A-BDE0-0D0B9D31FDF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.ServerControls", "Chai.WorkflowManagment.ServerControls\Chai.WorkflowManagment.ServerControls.csproj", "{63C11CE1-4190-491B-A3CC-CA21CDFECD73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Services", "Chai.WorkflowManagment.Services\Chai.WorkflowManagment.Services.csproj", "{99145D3D-2B6D-4C6F-98A9-9BC18584BD07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Modules.Admin", "Modules\Chai.WorkflowManagment.Modules.Admin\Chai.WorkflowManagment.Modules.Admin.csproj", "{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Modules.Report", "Modules\Chai.WorkflowManagment.Modules.Report\Chai.WorkflowManagment.Modules.Report.csproj", "{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Modules.Shell", "Modules\Chai.WorkflowManagment.Modules.Shell\Chai.WorkflowManagment.Modules.Shell.csproj", "{B6477755-F019-42BD-B33A-592B65BC6BF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Modules.Setting", "Modules\Chai.WorkflowManagment.Modules.Setting\Chai.WorkflowManagment.Modules.Setting.csproj", "{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Modules.Request", "Modules\Chai.WorkflowManagment.Modules.Request\Chai.WorkflowManagment.Modules.Request.csproj", "{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chai.WorkflowManagment.Modules.Approval", "Modules\Chai.WorkflowManagment.Modules.Approval\Chai.WorkflowManagment.Modules.Approval.csproj", "{01E5590D-C115-4AFD-802B-05D46F0FE13B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAB1B892-F12B-49E3-B9F9-14ACB5ED7DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB1B892-F12B-49E3-B9F9-14ACB5ED7DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAB1B892-F12B-49E3-B9F9-14ACB5ED7DB2}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB1B892-F12B-49E3-B9F9-14ACB5ED7DB2}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{20C49D35-4CEA-4C93-ACFF-3A570CA2FED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C49D35-4CEA-4C93-ACFF-3A570CA2FED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C49D35-4CEA-4C93-ACFF-3A570CA2FED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C49D35-4CEA-4C93-ACFF-3A570CA2FED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A10D850F-2040-44F8-8A6E-89BA91470FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10D850F-2040-44F8-8A6E-89BA91470FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10D850F-2040-44F8-8A6E-89BA91470FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10D850F-2040-44F8-8A6E-89BA91470FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C1C6D3D-633E-442A-BDE0-0D0B9D31FDF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1C6D3D-633E-442A-BDE0-0D0B9D31FDF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1C6D3D-633E-442A-BDE0-0D0B9D31FDF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C1C6D3D-633E-442A-BDE0-0D0B9D31FDF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C11CE1-4190-491B-A3CC-CA21CDFECD73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C11CE1-4190-491B-A3CC-CA21CDFECD73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C11CE1-4190-491B-A3CC-CA21CDFECD73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C11CE1-4190-491B-A3CC-CA21CDFECD73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99145D3D-2B6D-4C6F-98A9-9BC18584BD07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99145D3D-2B6D-4C6F-98A9-9BC18584BD07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99145D3D-2B6D-4C6F-98A9-9BC18584BD07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99145D3D-2B6D-4C6F-98A9-9BC18584BD07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6477755-F019-42BD-B33A-592B65BC6BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6477755-F019-42BD-B33A-592B65BC6BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6477755-F019-42BD-B33A-592B65BC6BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6477755-F019-42BD-B33A-592B65BC6BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E5590D-C115-4AFD-802B-05D46F0FE13B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E5590D-C115-4AFD-802B-05D46F0FE13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E5590D-C115-4AFD-802B-05D46F0FE13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E5590D-C115-4AFD-802B-05D46F0FE13B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CAB1B892-F12B-49E3-B9F9-14ACB5ED7DB2} = {F46F1E28-4EB0-4F40-8842-9945911BD8A0}
+		{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89} = {2323152C-FB9C-41D2-AC57-8BABE27D9ED1}
+		{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65} = {2323152C-FB9C-41D2-AC57-8BABE27D9ED1}
+		{B6477755-F019-42BD-B33A-592B65BC6BF9} = {2323152C-FB9C-41D2-AC57-8BABE27D9ED1}
+		{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA} = {2323152C-FB9C-41D2-AC57-8BABE27D9ED1}
+		{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D} = {2323152C-FB9C-41D2-AC57-8BABE27D9ED1}
+		{01E5590D-C115-4AFD-802B-05D46F0FE13B} = {2323152C-FB9C-41D2-AC57-8BABE27D9ED1}
+	EndGlobalSection
+EndGlobal

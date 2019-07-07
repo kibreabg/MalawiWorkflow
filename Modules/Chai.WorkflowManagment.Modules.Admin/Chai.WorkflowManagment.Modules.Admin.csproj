@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chai.WorkflowManagment.Modules.Admin</RootNamespace>
+    <AssemblyName>Chai.WorkflowManagment.Modules.Admin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeWeb">
+      <HintPath>..\..\Library\Microsoft.Practices.CompositeWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeWeb.EnterpriseLibrary">
+      <HintPath>..\..\Library\Microsoft.Practices.CompositeWeb.EnterpriseLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security">
+      <HintPath>..\..\Library\Microsoft.Practices.EnterpriseLibrary.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder">
+      <HintPath>..\..\Library\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminController.cs" />
+    <Compile Include="AdminModuleInitializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\DirectoryItem.cs" />
+    <Compile Include="Util\ListOfDirectoryItems.cs" />
+    <Compile Include="Views\AssignJobPresenter.cs" />
+    <Compile Include="Views\IAssignJobView.cs" />
+    <Compile Include="Views\IDefaultView.cs" />
+    <Compile Include="Views\DefaultViewPresenter.cs" />
+    <Compile Include="Views\IModuleEditView.cs" />
+    <Compile Include="Views\IModulesView.cs" />
+    <Compile Include="Views\INodeEditView.cs" />
+    <Compile Include="Views\INodesView.cs" />
+    <Compile Include="Views\IRoleEditView.cs" />
+    <Compile Include="Views\IRolesView.cs" />
+    <Compile Include="Views\ITabEditView.cs" />
+    <Compile Include="Views\ITaskpanEditView.cs" />
+    <Compile Include="Views\IUserEditView.cs" />
+    <Compile Include="Views\ILogsView.cs" />
+    <Compile Include="Views\IUsersView.cs" />
+    <Compile Include="Views\ModuleEditPresenter.cs" />
+    <Compile Include="Views\ModulesPresenter.cs" />
+    <Compile Include="Views\NodeEditPresenter.cs" />
+    <Compile Include="Views\NodesPresenter.cs" />
+    <Compile Include="Views\RoleEditPresenter.cs" />
+    <Compile Include="Views\RolesPresenter.cs" />
+    <Compile Include="Views\TabEditPresenter.cs" />
+    <Compile Include="Views\TaskpanEditPresenter.cs" />
+    <Compile Include="Views\UserEditPresenter.cs" />
+    <Compile Include="Views\LogsPresenter.cs" />
+    <Compile Include="Views\UsersPresenter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.CoreDomain\Chai.WorkflowManagment.CoreDomain.csproj">
+      <Project>{20c49d35-4cea-4c93-acff-3a570ca2fed7}</Project>
+      <Name>Chai.WorkflowManagment.CoreDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Enums\Chai.WorkflowManagment.Enums.csproj">
+      <Project>{a10d850f-2040-44f8-8a6e-89ba91470fae}</Project>
+      <Name>Chai.WorkflowManagment.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Services\Chai.WorkflowManagment.Services.csproj">
+      <Project>{99145d3d-2b6d-4c6f-98a9-9bc18584bd07}</Project>
+      <Name>Chai.WorkflowManagment.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Shared\Chai.WorkflowManagment.Shared.csproj">
+      <Project>{3c1c6d3d-633e-442a-bde0-0d0b9d31fdf2}</Project>
+      <Name>Chai.WorkflowManagment.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chai.WorkflowManagment.Modules.Shell\Chai.WorkflowManagment.Modules.Shell.csproj">
+      <Project>{b6477755-f019-42bd-b33a-592b65bc6bf9}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Shell</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties IsModuleProject="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
