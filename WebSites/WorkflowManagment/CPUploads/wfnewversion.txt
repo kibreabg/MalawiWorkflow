@@ -1,0 +1,2051 @@
+USE [WorkflowManagmentLatest]
+GO
+/****** Object:  Table [dbo].[EmployeePositions]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeePositions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PositionName] [nvarchar](50) NULL,
+ CONSTRAINT [PK_EmployeePosition] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[EmployeePositions] ON
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (3, N'Superviser/Line Manager')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (4, N'Admin/HR Officer')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (5, N'Driver')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (6, N'Operational Manager')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (7, N'Country Director')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (8, N'Finance Manager')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (9, N'Senior Analyst')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (10, N'Program Manager')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (11, N'Clinical Mentor')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (12, N'Mentor Counselor')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (13, N'Analyst')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (14, N'Program Officer')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (15, N'Secretary')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (16, N'Finance Officer')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (17, N'Deputy Country Director')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (18, N'Admin/HR Assisitance (Driver)')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (20, N'Administrator')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (23, N'Associate')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (24, N'Program Assistance')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (25, N'Secretary')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (26, N'Regional Finance Associate')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (27, N'Impact  Evaluation Coordinator')
+INSERT [dbo].[EmployeePositions] ([Id], [PositionName]) VALUES (40, N'Finance Officer')
+SET IDENTITY_INSERT [dbo].[EmployeePositions] OFF
+/****** Object:  UserDefinedFunction [dbo].[fnGetNumberSep]    Script Date: 12/30/2015 02:59:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[fnGetNumberSep](@String NVARCHAR(60)) 
+RETURNS INT 
+AS 
+BEGIN 
+    DECLARE @NumPart NVARCHAR(60) 
+    DECLARE @Char NVARCHAR(1) 
+    DECLARE @Len INT 
+    DECLARE @LoopCount INT 
+ 
+    SET @Len = LEN(@String) 
+    SET @Char = RIGHT(@String,1) 
+    SET @NumPart = '' 
+    SET @LoopCount = 0 
+ 
+    WHILE @Len > 0 AND @Char IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9') 
+    BEGIN  
+        SET @Len = @Len - 1 
+        SET @NumPart = @Char + @NumPart  
+        SET @Char = SUBSTRING(@String,@Len,1) 
+        SET @LoopCount = @LoopCount + 1 
+    END 
+ IF (@LoopCount > 8) 
+ BEGIN         
+       SET @Len = LEN(@String)  
+   END     
+  RETURN @Len 
+END
+GO
+/****** Object:  UserDefinedFunction [dbo].[fnGetNumberOfPakage]    Script Date: 12/30/2015 02:59:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[fnGetNumberOfPakage] 
+(
+	@PackagingSize INT,
+	@NoProduct DECIMAL(18,2)
+)
+RETURNS INT
+AS
+BEGIN
+
+	DECLARE @Nopack INT
+	DECLARE @Result decimal(18,9)
+	IF @PackagingSize=0
+		SET @Result = @NoProduct
+	ELSE
+		SET @Result = @NoProduct / @PackagingSize
+		
+	SET @Nopack = CAST(ROUND(@Result, 0) AS INT)
+	
+	IF(@Nopack<@Result)
+		SET @Nopack = @Nopack + 1
+	IF(@Nopack = 0)
+		SET @Nopack = 1
+	
+	RETURN @Nopack
+
+END
+GO
+/****** Object:  Table [dbo].[CarRentals]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CarRentals](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[PhoneNo] [varchar](50) NULL,
+	[ContactAddress] [varchar](50) NULL,
+ CONSTRAINT [PK_CarRental] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+SET IDENTITY_INSERT [dbo].[CarRentals] ON
+INSERT [dbo].[CarRentals] ([Id], [Name], [PhoneNo], [ContactAddress]) VALUES (1, N'Excellence Car Hire', N'0', N'20 Cleverland Road Milton Park Hre')
+SET IDENTITY_INSERT [dbo].[CarRentals] OFF
+/****** Object:  Table [dbo].[Beneficiaries]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Beneficiaries](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BeneficiaryName] [nvarchar](50) NULL,
+	[BankName] [nvarchar](50) NULL,
+	[BranchName] [nvarchar](50) NULL,
+	[SortCode] [nvarchar](50) NULL,
+	[AccountNumber] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Beneficiary] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Beneficiaries] ON
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (1, N'Haris Auto', N'Barclays', N'Avondale', N'2164', N'09987363652465')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (2, N'Excellence  Car  Rental ', N' Z.B. Bank', N'Avondale ', N'4108', N'4108725705 080')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (3, N'Redan Petroleum ', N'Eco Bank ', N'Borrowdale', N'001', N'0011017600560701')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (4, N'Medical  Research  Council  of Zimbabwe ', N'CBZ', N'Kwame Nkrumah', N'6101', N'01120068040016')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (5, N'BYCO', N'CBZ', N'Kwqmw Nkrumah', N'6101', N'01120035930024')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (6, N'Training and  Research Support Centre', N'Standard Chartered  Bank ', N'Avondale', N'5101', N'8700208026700')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (7, N'Sabinah  Rwatizha ', N'MBCA Bank ', N'Southerton', N'18104', N'161016061623')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (8, N'Mars ', N'NMB', N'Joina City ', N'11109', N'320008611')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (9, N'CIMAS', N'ZB Bank', N'Rotten  Row', N'41780', N'4178060937203')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (10, N'Twinstead ', N'Standard Chartered Bank', N'Africa Unity Square', N'05101', N'8700207158880')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (11, N'Medsure', N'Stanbic', N'Southerton ', N'6101', N'022201050501')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (12, N'Dzimbahwe Hospitality ', N'Stanbic', N' Msasa', N'6101', N'0222082676201')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (13, N'Econet ', N' Barclays ', N'FCDA Centre ', N'2157', N'6697570')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (14, N'The  Village Lodge ', N'CBZ', N'Gweru', N'18000', N'01821846370029')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (15, N'Chengeta Safari Lodge ', N'Stanbic', N'Chegutu', N'1013', N'0240048652501')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (16, N'Martin Magunda', N'Stanbic', N'Samora Machel', N'6101', N'0240027410201')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (17, N'Zimbabwe Online ', N'NMB Bank', N'Eastgate', N'11109', N'240064332')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (18, N'The  Village Space ', N'CBZ', N'Newlands', N'0618', N'68960635860028')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (19, N'Candara  Investments  ', N'NMB', N'Avondale', N'11110', N'280007854')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (20, N'Zimbabwe Posts Limited ', N'FBC', N'Samora Machel', N'1201', N'3410064460112')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (21, N'Chengeat  Safari Lodge ', N'Stanbic ', N'Chegutu', N'1013', N'0240048652501')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (22, N'DA DUNN', N'Barclays ', N'FCDA', N'2157', N'1028826')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (23, N'Vahosi Trading', N'Stanbic', N'Parkalane', N'6101', N'0222004104101')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (24, N'Delma  Printers ', N'Stanbic ', N'Nelson Mandela', N'3101', N'0222035718001')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (25, N'Lighthouse ', N'Zb  Bank ', N'Avondale', N'4113', N'4113552807080')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (26, N'SG  Luxury  Apartments ', N'Cabs ', N'Borrowdale', N'12000', N'1003761030')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (27, N'Crowne Plaza ', N'FBC Bank ', N'Samora  Machel ', N'1201', N'81013110149410178')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (28, N'Safeguard', N'Stanbic ', N'Nelson Mandela', N'6101', N'0222063127601')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (29, N'Holiday  Inn Harare ', N'MBCA', N'Southerton ', N'18104', N'16103100616')
+INSERT [dbo].[Beneficiaries] ([Id], [BeneficiaryName], [BankName], [BranchName], [SortCode], [AccountNumber]) VALUES (30, N'Rainbow  Towers  Hotel ', N' FBC Bank ', N'Samora Machel ', N'1201', N'311063071027')
+SET IDENTITY_INSERT [dbo].[Beneficiaries] OFF
+/****** Object:  Table [dbo].[AssignJobs]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssignJobs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[AppUser_Id] [int] NULL,
+	[EmployeePosition_Id] [int] NULL,
+	[Status] [bit] NULL,
+	[AssignedTo] [int] NULL,
+ CONSTRAINT [PK_AssignedJobs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[AssignJobs] ON
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (1, 14, 28, 0, 10)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (2, 13, 29, 0, 14)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (3, 15, 30, 1, 17)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (4, 20, 31, 0, 12)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (5, 19, 32, 1, 12)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (6, 33, 33, 0, 10)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (7, 33, 34, 0, 10)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (8, 20, 35, 0, 12)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (9, 20, 36, 0, 12)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (10, 13, 37, 0, 33)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (11, 33, 38, 0, 0)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (12, 13, 39, 0, 14)
+INSERT [dbo].[AssignJobs] ([Id], [AppUser_Id], [EmployeePosition_Id], [Status], [AssignedTo]) VALUES (13, 13, 40, 1, 14)
+SET IDENTITY_INSERT [dbo].[AssignJobs] OFF
+/****** Object:  Table [dbo].[AppUsers]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AppUsers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](100) NOT NULL,
+	[FirstName] [nvarchar](64) NOT NULL,
+	[LastName] [nvarchar](64) NOT NULL,
+	[Email] [nvarchar](100) NULL,
+	[EmployeeNo] [nvarchar](50) NULL,
+	[IsActive] [bit] NOT NULL,
+	[LastLogin] [datetime] NULL,
+	[LastIp] [nvarchar](40) NULL,
+	[DateCreated] [datetime] NOT NULL,
+	[DateModified] [datetime] NULL,
+	[EmployeePosition_Id] [int] NULL,
+	[Superviser] [int] NULL,
+	[IsAssignedJob] [bit] NULL,
+	[TerminationDate] [datetime] NULL,
+ CONSTRAINT [PK_AppUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[AppUsers] ON
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (2, N'KB', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Kibreab', N'Gizatu', N'kibreabg@gmail.com', N'', 1, CAST(0x0000A56A00BFA81B AS DateTime), N'::1', CAST(0x0000A3AF0106414A AS DateTime), CAST(0x0000A4F90072F9B3 AS DateTime), 20, 0, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (10, N'Alexio', N'387fd857faa61f179ab49698084dc982', N'Alexio', N'Mangwiro', N'amangwiro@clintonhealthaccess.org', N'', 1, CAST(0x0000A56F0021D452 AS DateTime), N'10.139.1.77', CAST(0x0000A3E900BAB737 AS DateTime), CAST(0x0000A51C00767EA3 AS DateTime), 7, 12, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (12, N'Thuthuka', N'59d76cf74ea12ba23138a2124b6df2f4', N'Thuthuka', N'Mkhosi Moyo', N'tmkhosimoyo@clintonhealthaccess.org', N'', 1, CAST(0x0000A5630044ED6C AS DateTime), N'10.139.1.64', CAST(0x0000A3E900BBF517 AS DateTime), CAST(0x0000A495002919B5 AS DateTime), 6, 10, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (13, N'Simbisai', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Simbisai', N'Kadye', N'skadye@clintonhealthaccess.org', N'', 1, CAST(0x0000A572002A97A2 AS DateTime), N'10.139.1.60', CAST(0x0000A3E900BC89D8 AS DateTime), CAST(0x0000A4D5002CD7E4 AS DateTime), 16, 12, 1, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (14, N'Josephine', N'ab0f9619506d8d861d08973712fb53b6', N'Josephine', N'Mthunzi', N'jmthunzi@clintonhealthaccess.org', N'', 1, CAST(0x0000A572005B3409 AS DateTime), N'10.139.1.75', CAST(0x0000A3E900BD2BE1 AS DateTime), CAST(0x0000A4C90034E183 AS DateTime), 4, 12, 0, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (15, N'Barnabas', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Barnabas', N'Kapfunde', N'bkapfunde@clintonHealthAccess.org', N'', 1, CAST(0x0000A563006B9E58 AS DateTime), N'10.139.1.113', CAST(0x0000A3E900BDDE32 AS DateTime), CAST(0x0000A3F800F28F3D AS DateTime), 18, 14, 1, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (16, N'Ennie', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Ennie', N'Moyo', N'emoyo@clintonhealthaccess.org', N'', 1, CAST(0x0000A563017DBCC9 AS DateTime), N'10.139.1.37', CAST(0x0000A3E900BE5633 AS DateTime), CAST(0x0000A51700117504 AS DateTime), 5, 14, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (17, N'Bulisani', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Bulisani', N'Khumalo', N'bkhumalo@clintonhealthaccess.org', N'', 1, CAST(0x0000A5370009D021 AS DateTime), N'10.139.1.38', CAST(0x0000A3E900BEB33D AS DateTime), CAST(0x0000A44300FF42BF AS DateTime), 5, 14, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (18, N'Adam', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Adam', N'Shambare', N'ygossaye@clintonhealthaccess.org', N'', 1, CAST(0x0000A46400E7CC37 AS DateTime), N'127.0.0.1', CAST(0x0000A3E900BF0913 AS DateTime), CAST(0x0000A46400E7BE2A AS DateTime), 5, 14, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (19, N'Phibeon', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Phibeon', N'Munyaradzi Mangwendeza', N'pmangwendeza@clintonhealthaccess.org', N'', 1, CAST(0x0000A56700706BA4 AS DateTime), N'197.211.216.65', CAST(0x0000A3E900BFB376 AS DateTime), CAST(0x0000A500007962EF AS DateTime), 10, 33, 1, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (20, N'Tendai', N'12881ed08c6017fa7994383249cdc803', N'Tendai', N'Gotora', N'tgotora@clintonhealthaccess.org', N'', 1, CAST(0x0000A5700002D4A2 AS DateTime), N'10.139.1.51', CAST(0x0000A3E900C025BB AS DateTime), CAST(0x0000A53E002B3AE9 AS DateTime), 10, 10, 0, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (22, N'Ana', N'25f9e794323b453885f5181f1b624d0b', N'Ana', N'Svoren', N'asvoren@clintonhealthaccess.org', N'', 1, CAST(0x0000A497005E2DA3 AS DateTime), N'10.139.1.69', CAST(0x0000A3E900C4DD74 AS DateTime), CAST(0x0000A3E900C4DD74 AS DateTime), 23, 19, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (23, N'Blandina', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Blandina', N'Muzunze', N'bmuzunze@clintonhealthaccess.org', N'', 1, CAST(0x0000A538000CCCDD AS DateTime), N'10.139.1.42', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A515005A583A AS DateTime), 11, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (24, N'Mila', N'03ad1e01f40d9cb5e723abba52e97330', N'Mila', N'Owen', N'MOwen@clintonhealthaccess.org', N'', 1, CAST(0x0000A49800160273 AS DateTime), N'10.139.1.97', CAST(0x0000A3E900C65BC8 AS DateTime), CAST(0x0000A403002031D5 AS DateTime), 13, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (25, N'Wadzanayi', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Wadzanayi', N'Muchenje', N'WMuchenje@clintonhealthaccess.org', N'', 1, CAST(0x0000A55500439B39 AS DateTime), N'10.139.1.94', CAST(0x0000A3E900C7507B AS DateTime), CAST(0x0000A3E900C7507B AS DateTime), 13, 11, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (27, N'Bekithemba', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Bekithemba', N'Ndhlovu', N'bndhlovu@clintonhealthaccess.org', N'', 1, CAST(0x0000A5670164CAE1 AS DateTime), N'10.139.1.37', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A55900229CE4 AS DateTime), 11, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (28, N'Boboh', N'3813e785614c264750238c1a5077fc96', N'Boboh', N'Kamangira', N'bkamangira@clintonhealthaccess.org', N'', 1, CAST(0x0000A5700046FB10 AS DateTime), N'10.139.1.55', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A49400DC54F0 AS DateTime), 13, 19, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (29, N'Darlington', N'037d0f512f75318e1b9e232216aa12d2', N'Darlington', N'Mawodzeke', N'dmawodzeke@clintonHealthAccess.org', N'', 1, CAST(0x0000A5670163EF02 AS DateTime), N'10.139.1.40', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A495000587BC AS DateTime), 11, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (30, N'Dzidzai', N'b772ec0def2a09eca85c3e82c6c50abe', N'Dzidzai', N'Chiwera', N'dchiwera@clintonHealthAccess.org', N'', 1, CAST(0x0000A56F01764EF4 AS DateTime), N'10.139.1.45', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A515005960BC AS DateTime), 11, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (31, N'Edward', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Edward', N'Muguza', N'EMuguza@clintonhealthaccess.org', N'', 1, CAST(0x0000A56F005D5707 AS DateTime), N'197.211.216.65', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4ED0014092A AS DateTime), 10, 10, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (32, N'Jason', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Jason', N'Owen', N'jowen@clintonhealthaccess.org', N'', 1, CAST(0x0000A571006908F3 AS DateTime), N'10.139.1.90', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A529003A3022 AS DateTime), 13, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (33, N'Ngonidzashe', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Ngonidzashe', N'Madidi ', N'nmadidi@clintonhealthaccess.org', N'', 1, CAST(0x0000A55B00607DB8 AS DateTime), N'10.139.1.69', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A5000079A2AC AS DateTime), 10, 12, 0, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (34, N'Lenah', N'129363c282792889443269a4748b3fd9', N'Lenah', N'Nyakubaya', N'lnyakubaya@clintonhealthaccess.org', N'', 1, CAST(0x0000A55900288CB7 AS DateTime), N'10.139.1.36', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A49500062431 AS DateTime), 11, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (35, N'Lorencia', N'33c816db148c893b88a900c66712e073', N'Lorencia', N'Chigweshe', N'lchigweshe@clintonhealthaccess.org', N'', 1, CAST(0x0000A54B00068DBA AS DateTime), N'10.139.1.41', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A495000638D5 AS DateTime), 24, 19, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (36, N'Munashe', N'19729878ec31b000c38db4ec5bb0a451', N'Munashe', N'Madinga', N'mmadinga@clintonhealthaccess.org', N'', 1, CAST(0x0000A572001AF6C4 AS DateTime), N'197.211.216.65', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4ED001AB497 AS DateTime), 14, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (37, N'Munyaradzi', N'f533a825d9d75c3fb04c55e38f3e3641', N'Munyaradzi', N'Mareke', N'mmareke@clintonhealthaccess.org', N'', 1, CAST(0x0000A571017F877B AS DateTime), N'10.139.1.41', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4F9005AAF1F AS DateTime), 13, 31, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (38, N'Nqabutho', N'4385695633f8c6c8ab52592092cecf04', N'Nqabutho', N'Nyathi', N'nnyathi@clintonhealthaccess.org', N'', 1, CAST(0x0000A56400628158 AS DateTime), N'10.139.1.77', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A50900233AC0 AS DateTime), 14, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (39, N'Ollipa', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Ollipa', N'Gumbo', N'ygossaye@clintonhealthaccess.org', N'', 1, NULL, NULL, CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A44300FEFB12 AS DateTime), 25, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (40, N'Prosper', N'f010edf84c0744a480526bf8a6fabc07', N'Prosper', N'Mangwiro', N'pmangwiro@clintonhealthaccess.org', N'', 1, CAST(0x0000A5530171AD1B AS DateTime), N'10.139.1.50', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4FA00608D5E AS DateTime), 13, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (41, N'Ratidzo', N'2a219f053d06ad5c72a487df52fc6f46', N'Ratidzo', N'Mutizwa', N'rmutizwa@clintonhealthaccess.org', N'', 1, CAST(0x0000A56F0023711F AS DateTime), N'10.139.1.55', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4950006B830 AS DateTime), 13, 31, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (42, N'Rumbidzai', N'9963fc5e1ff37dd3cfafbae92c22b745', N'Rumbidzai', N'Manzou', N'rmanzou@clintonhealthaccess.org', N'', 1, CAST(0x0000A5530009C583 AS DateTime), N'10.139.1.42', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4ED000CB069 AS DateTime), 13, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (43, N'Tarirai', N'680388ea739b6d8bb1fb7860e5f6fa3c', N'Tarirai', N'Mavimba', N'tmavimba@clintonhealthaccess.org', N'', 1, CAST(0x0000A55A00528E90 AS DateTime), N'10.139.1.72', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4950006F7EC AS DateTime), 14, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (44, N'Tatenda ', N'84ecd02a3b73faf66e83f5e39c912a28', N'Tatenda', N'Shoko', N'tshoko@clintonhealthaccess.org', N'', 1, CAST(0x0000A56000086955 AS DateTime), N'10.139.1.56', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A49500070E89 AS DateTime), 13, 19, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (45, N'Wadzanaii', N'74f1183ec0a4c6817ad6379928674179', N'Wadzanai', N'Motsi ', N'wmotsi@clintonhealthaccess.org', N'', 1, CAST(0x0000A57D001FD9AA AS DateTime), N'10.139.1.30', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4ED00715852 AS DateTime), 10, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (46, N'Yemurai ', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Yemurai ', N'Mangwendeza', N'ymangwendeza@clintonhealthaccess.org', N'', 1, CAST(0x0000A564000FE873 AS DateTime), N'10.139.1.38', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4FA006022D6 AS DateTime), 13, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (47, N'Glenda', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Glenda', N'Moyo', N'gmoyo@clintonhealthaccess.org', N'', 1, CAST(0x0000A4EB006C2682 AS DateTime), N'10.139.1.62', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4950007E3C4 AS DateTime), 26, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (48, N'Haurovi', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Haurovi', N'Mafaune', N'hmafaune@clintonhealthaccess.org', N'', 1, CAST(0x0000A5710039127F AS DateTime), N'10.139.1.37', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4ED000A2E70 AS DateTime), 27, 20, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (49, N'Charles', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Charles', N'Kasipo ', N'ckasipo@clintonHealthAccess.org', N'', 1, NULL, NULL, CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A4950008195E AS DateTime), 10, 12, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (50, N'NgonidzasheCh', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Ngonidzashe', N'Chihombori', N'ygossaye@clintonHealthAccess.org', N'', 1, CAST(0x0000A56F004EF097 AS DateTime), N'10.139.1.89', CAST(0x0000A3E900C5BB9F AS DateTime), CAST(0x0000A495000833A8 AS DateTime), 13, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (51, N'Brighton  ', N'96b33694c4bb7dbd07391e0be54745fb', N'Brighton ', N'Gambinga ', N'bgambinga@clintonhealthaccess.org', N'', 1, CAST(0x0000A5700066F6B0 AS DateTime), N'10.139.1.68', CAST(0x0000A4E9006DC1BC AS DateTime), CAST(0x0000A4E9006DC1BC AS DateTime), 13, 33, NULL, NULL)
+INSERT [dbo].[AppUsers] ([Id], [UserName], [Password], [FirstName], [LastName], [Email], [EmployeeNo], [IsActive], [LastLogin], [LastIp], [DateCreated], [DateModified], [EmployeePosition_Id], [Superviser], [IsAssignedJob], [TerminationDate]) VALUES (52, N'Tarryn', N'05c27788d3b96938596c4719564f071d', N'Tarryn', N'Bowers', N'tbowers@clintonhealthaccess.org', N'', 1, CAST(0x0000A57100314363 AS DateTime), N'10.139.1.75', CAST(0x0000A4E90087A9B3 AS DateTime), CAST(0x0000A4E90087A9B3 AS DateTime), 13, 45, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[AppUsers] OFF
+/****** Object:  Table [dbo].[LeaveTypes]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LeaveTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[LeaveTypeName] [nvarchar](50) NULL,
+ CONSTRAINT [PK_LeaveTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[LeaveTypes] ON
+INSERT [dbo].[LeaveTypes] ([Id], [LeaveTypeName]) VALUES (1, N'Annual Leave')
+INSERT [dbo].[LeaveTypes] ([Id], [LeaveTypeName]) VALUES (2, N'Compassionate')
+INSERT [dbo].[LeaveTypes] ([Id], [LeaveTypeName]) VALUES (3, N'Maternity Leave')
+INSERT [dbo].[LeaveTypes] ([Id], [LeaveTypeName]) VALUES (4, N'Sick Leave')
+INSERT [dbo].[LeaveTypes] ([Id], [LeaveTypeName]) VALUES (5, N'Special')
+SET IDENTITY_INSERT [dbo].[LeaveTypes] OFF
+/****** Object:  Table [dbo].[PocModules]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PocModules](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](64) NOT NULL,
+	[FolderPath] [nvarchar](255) NOT NULL,
+ CONSTRAINT [PK_PocModules] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[PocModules] ON
+INSERT [dbo].[PocModules] ([Id], [Name], [FolderPath]) VALUES (1, N'Setting', N'/Setting/')
+INSERT [dbo].[PocModules] ([Id], [Name], [FolderPath]) VALUES (2, N'Request', N'/Request/')
+INSERT [dbo].[PocModules] ([Id], [Name], [FolderPath]) VALUES (3, N'Approval', N'/Approval/')
+INSERT [dbo].[PocModules] ([Id], [Name], [FolderPath]) VALUES (4, N'Report', N'/Report/')
+SET IDENTITY_INSERT [dbo].[PocModules] OFF
+/****** Object:  Table [dbo].[Nodes]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Nodes](
+	[PocModule_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](64) NOT NULL,
+	[FilePath] [nvarchar](255) NOT NULL,
+	[ImagePath] [nvarchar](255) NULL,
+	[Description] [nvarchar](255) NULL,
+	[PageId] [nvarchar](64) NULL,
+ CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Nodes] ON
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 1, N'Grant', N'frmGrant.aspx', N'', N'Project Grant Source', N'{969246EF-65E7-4E32-87A9-86B481C365B1}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 2, N'Project', N'frmProjects.aspx', N'', N'Programs', N'{B428E389-9CD4-4B56-BEEE-3E4C48F746DA}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 3, N'Employee Position', N'frmEmployeePosition.aspx', N'', N'', N'{F1DA0019-C467-4C97-A28E-C4496931A6B7}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 4, N'Chart of Accounts', N'frmItemAccount.aspx', N'', N'', N'{969246EF-65E7-4E32-87A9-86B481C365B1}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 5, N'Leave Type', N'frmLeaveType.aspx', N'', N'', N'{990C732F-25EE-4287-A093-423026F33676}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 6, N'Supplier', N'frmSupplier.aspx', N'', N'Supplier', N'{8E5FAA6E-E9E9-4B21-888D-11539FA9BBA8}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 7, N'Approval Setting', N'frmApprovalSetting.aspx', N'', N'Approval Setting', N'{CBF21161-18DD-434A-9B0B-E6316AB62637}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 8, N'Car Rental', N'frmCarRental.aspx', N'', N'Car Rental Node', N'{94C874DF-15C7-4978-A8C7-80221EE83AAD}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 9, N'Vehicle Request', N'frmVehicleRequest.aspx', N'', N'Vehicle Request Node', N'{D1B7939C-7154-4403-B535-B4D33684CE21}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 10, N'Vehicle Approval', N'frmVehicleApproval.aspx', N'', N'Vehicle Approval Node', N'{7E42140E-DD62-4230-983E-32BD9FA35817}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 11, N'Travel Log', N'frmTravelLog.aspx', N'', N'Travel Log for a request', N'{79FFA014-4057-4C71-9519-FF519DA2E2E2}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 12, N'Payment Request', N'frmCashPaymentRequest.aspx', N'', N'Cash Payment Request Page', N'{BECD9CB0-C328-4E89-ABD7-A54D1B2B3570}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 14, N'Payment Approval', N'frmCashPaymentApproval.aspx', N'', N'Cash Payment Approval Page', N'{00397B85-1427-4EE2-94D7-7A1E8650A568}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 15, N'Travel Advance Request', N'frmTravelAdvanceRequest.aspx', N'', N'Travel Advance Request Page', N'{3FB48884-3B42-47CB-B5DA-10D330CAED92}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 16, N'Travel Advance Approval', N'frmTravelAdvanceApproval.aspx', N'', N'Travel Advance Approval Page', N'{DBC4CB73-69E5-42F3-84F8-09F8EA69B06D}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 17, N'Expense Liquidation', N'frmExpenseLiquidationRequest.aspx', N'', N'Expense Liquidation Request Page', N'{E8C99D50-3363-4518-AD1D-9A370D6EC30F}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 18, N'Expense Liquidation Approval', N'frmExpenseLiquidationApproval.aspx', N'', N'Expense Liquidation Approval', N'{136836C4-1353-4DEF-A912-BF65AA84497C}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 19, N'Leave Request', N'frmLeaveRequest.aspx', N'', N'Leave Request', N'{EEB211B3-70FC-429B-8662-927A0C8A9511}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 20, N'Purchase Request', N'frmPurchaseRequest.aspx', N'', N'Purchase Request', N'{334AAED8-456F-44AC-A203-FC4CE87FC3CD}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 21, N'Leave Approval', N'frmLeaveApproval.aspx', N'', N'', N'{282224A8-DCCA-4FED-AAB1-BEB6A5AA0653}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 22, N'Purchase Approval', N'frmPurchaseApproval.aspx', N'', N'Purchase Approval', N'{BF5943CA-07E5-4817-93EC-DE39D67D5562}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 23, N'Leave Report', N'frmLeaveReport.aspx', N'', N'Leave Report', N'{8FD3CC34-9213-497B-A316-F59D40EADB44}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 24, N'Vehicle Report', N'frmVehicleReport.aspx', N'', N'Vehicle Report', N'{A91F2C96-C8E9-493B-8D47-033940D3BA93}}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 25, N'Payment Report', N'frmCashPaymentReport.aspx', N'', N'Payment Report', N'{4C647E6A-06EB-42A4-B531-D92E977EE8D2}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 26, N'Purchase Report', N'frmPurchaseReport.aspx', N'', N'Purchase Report', N'{11DD2697-6CF6-416C-98D6-848916B5393D}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 27, N'Travel Advance Report', N'frmTravelAdvanceReport.aspx', N'', N'Travel Advance Report', N'{16099272-44CA-4DDC-A850-D964F417D036}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 28, N'Liquidation Report', N'frmLiquidationReport.aspx', N'', N'Liquidation Report', N'{8FD3CC34-9213-497B-A316-F59D40EADB44}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 29, N'Dashboard', N'frmDashBoard.aspx', N'', N'Dashboard', N'{E4F341CE-5215-410C-B765-57EFEDAC8A01}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 30, N'Bank Accounts', N'frmBankAccounts.aspx', N'', N'Bank Accounts', N'{9F2504F1-4BC8-4945-BAFA-0ADFB417E390}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 31, N'Payment Reimbursement Request', N'frmPaymentReimbursementRequest.aspx', N'', N'Payment Reimbursement Request', N'{0B827E67-C83E-45CB-B048-A709BD4625C8}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 32, N'Payment Reimbursement Approval', N'frmPaymentReimbursementApproval.aspx', N'', N'Payment Reimbursement Approval', N'{A1CF3CA4-8F4D-477F-82D2-15A7B689B697}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 33, N'Bank Payment  Request', N'frmOperationalControlRequest.aspx', N'', N'Operational Control Request', N'{8C9E89D2-3048-4242-A0A9-88D41FF8C700}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 34, N'Bank Payment Approval', N'frmOperationalControlApproval.aspx', N'', N'Operational Control Approval', N'{00397B85-1427-4EE2-94D7-7A1E8650A568}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 37, N'Supplier Type', N'frmSupplierType.aspx', N'', N'Supplier Type', N'{C89D5298-958A-4808-9213-0462754C2A9E}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 38, N'Employee Leave Setting', N'frmEmployeeLeave.aspx', N'', N'Employee Leave Setting', N'{973D4E9B-2721-461A-9519-8B4AF2E75B5A}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 39, N'Cost Sharing Setting', N'frmCostSharingSetting.aspx', N'', N'Cost Sharing Setting', N'{FAC4E85E-A360-4F0E-B1A6-099B38F4D615}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (2, 40, N'Cost Sharing Request', N'frmCostSharingRequest.aspx', N'', N'Cost Sharing Request', N'{BECD9CB0-C328-4E89-ABD7-A54D1B2B3570}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (3, 41, N'Cost Sharing Approval', N'frmCostSharingApproval.aspx', N'', N'Cost Sharing Approval', N'{9C411111-6AD3-4C19-BEED-CC6020DB6B7C}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 42, N'Export Bank Payment', N'frmExportBankPayment.aspx', N'', N'Export Bank Payment', N'{228BA9DE-58B1-438B-B3A2-2FC8A96757D4}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 43, N'Export Cash Payment', N'frmExportCashPayment.aspx', N'', N'Export Cash Payment', N'{74031D41-C86A-4777-AEB4-624BEB8A27FF}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 44, N'Export Travel Advance', N'frmExportTraveladvance.aspx', N'', N'Export Travel Advance', N'{5E178312-553F-480B-9A3B-9FF7F30F2182}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 45, N'Beneficiary', N'frmBeneficiary.aspx', N'', N'Beneficiary', N'{04515AEA-B1B2-4D02-BD91-0B74E4C75CD4}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (1, 46, N'Vehicles', N'frmVehicle.aspx', N'', N'', N'{7B51A5EE-B7D6-449B-ABE6-BD6DBE0C337E}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 48, N'Export Cost Sharing Payment', N'frmExportCostSharingPayment.aspx', N'', N'Export Cost Sharing Payment', N'{F489587B-E3A1-4EDE-BF6E-5EFE127AEA84}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 49, N'Bank Payment Report', N'frmBankPaymentReport.aspx', N'', N'Bank Payment Report', N'{FD19DC82-D708-4FCD-AEFB-6EE3E42A5C80}')
+INSERT [dbo].[Nodes] ([PocModule_Id], [Id], [Title], [FilePath], [ImagePath], [Description], [PageId]) VALUES (4, 50, N'Cost Sharing Payment Report', N'frmCostSharingPaymentReport.aspx', N'', N'Cost Sharing Payment Report', N'{89E0DD48-5F55-451A-B6D0-FB75DAEDA197}')
+SET IDENTITY_INSERT [dbo].[Nodes] OFF
+/****** Object:  StoredProcedure [dbo].[UpdateTaskpanNodePosition]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateTaskpanNodePosition](
+	@PanNodeId INT,
+	@Direction INT)
+AS
+BEGIN
+
+DECLARE @LeftTabID INT         
+DECLARE @CurrentTabPosition INT            
+
+DECLARE @SortOrderTable TABLE (PanNodeID INT,  SortOrder INT IDENTITY) 
+
+INSERT INTO @SortOrderTable (PanNodeID) SELECT t.Id FROM TaskPanNode t ORDER BY t.Position
+         
+SELECT @CurrentTabPosition = SortOrder FROM  @SortOrderTable  WHERE @PanNodeId = PanNodeID
+
+	IF(@Direction = 1)
+	BEGIN 
+	   
+		SELECT TOP 1 @LeftTabID = PanNodeID FROM  @SortOrderTable
+		WHERE SortOrder < ISNULL(@CurrentTabPosition, 0) AND (@PanNodeId <> PanNodeID)          
+		ORDER BY SortOrder DESC          
+
+		UPDATE tb SET Position = st.SortOrder
+		FROM TaskPanNode tb INNER JOIN @SortOrderTable st ON tb.Id = st.PanNodeID
+
+		IF( @LeftTabID IS NOT NULL)
+		BEGIN
+			UPDATE tb SET Position = Position + 1
+			FROM TaskPanNode tb WHERE Id = @LeftTabID
+
+			UPDATE tb SET Position = Position - 1
+			FROM TaskPanNode tb WHERE Id = @PanNodeId
+		END
+	END
+	ELSE
+	BEGIN
+	
+		SELECT TOP 1 @LeftTabID = PanNodeID FROM @SortOrderTable             
+		WHERE SortOrder > ISNULL(@CurrentTabPosition, 0) AND (@PanNodeId <> PanNodeID)          
+		ORDER BY SortOrder ASC         
+		
+		UPDATE tb SET Position = st.SortOrder
+		FROM TaskPanNode tb INNER JOIN @SortOrderTable st ON tb.Id = st.PanNodeID
+
+		IF( @LeftTabID IS NOT NULL)
+		BEGIN
+			UPDATE tb SET Position = Position - 1
+			FROM TaskPanNode tb WHERE Id = @LeftTabID
+
+			UPDATE tb SET Position = Position + 1
+			FROM TaskPanNode tb WHERE Id = @PanNodeId
+		END
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateTaskpanPosition]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateTaskpanPosition](
+	@PanId INT,
+	@Direction INT)
+AS
+BEGIN
+
+DECLARE @LeftTabID INT         
+DECLARE @CurrentTabPosition INT            
+
+DECLARE @SortOrderTable TABLE (PanID INT,  SortOrder INT IDENTITY) 
+
+INSERT INTO @SortOrderTable (PanID) SELECT t.TaskPanId FROM TaskPan t ORDER BY t.Position
+         
+SELECT @CurrentTabPosition = SortOrder FROM  @SortOrderTable  WHERE @PanId = PanID
+
+	IF(@Direction = 1)
+	BEGIN 
+	   
+		SELECT TOP 1 @LeftTabID = PanID FROM  @SortOrderTable
+		WHERE SortOrder < ISNULL(@CurrentTabPosition, 0) AND (@PanId <> PanID)          
+		ORDER BY SortOrder DESC          
+
+		UPDATE tb SET Position = st.SortOrder
+		FROM TaskPan tb INNER JOIN @SortOrderTable st ON tb.TaskPanId = st.PanID
+
+		IF( @LeftTabID IS NOT NULL)
+		BEGIN
+			UPDATE tb SET Position = Position + 1
+			FROM TaskPan tb WHERE TaskPanId = @LeftTabID
+
+			UPDATE tb SET Position = Position - 1
+			FROM TaskPan tb WHERE TaskPanId = @PanId
+		END
+	END
+	ELSE
+	BEGIN
+	
+		SELECT TOP 1 @LeftTabID = PanID FROM @SortOrderTable             
+		WHERE SortOrder > ISNULL(@CurrentTabPosition, 0) AND (@PanId <> PanID)          
+		ORDER BY SortOrder ASC         
+		
+		UPDATE tb SET Position = st.SortOrder
+		FROM TaskPan tb INNER JOIN @SortOrderTable st ON tb.TaskPanId = st.PanID
+
+		IF( @LeftTabID IS NOT NULL)
+		BEGIN
+			UPDATE tb SET Position = Position - 1
+			FROM TaskPan tb WHERE TaskPanId = @LeftTabID
+
+			UPDATE tb SET Position = Position + 1
+			FROM TaskPan tb WHERE TaskPanId = @PanId
+		END
+	END
+END
+GO
+/****** Object:  Table [dbo].[Tabs]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tabs](
+	[PocModule_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TabName] [nvarchar](64) NOT NULL,
+	[Position] [int] NOT NULL,
+	[Description] [nvarchar](156) NULL,
+ CONSTRAINT [PK_Tabs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Tabs] ON
+INSERT [dbo].[Tabs] ([PocModule_Id], [Id], [TabName], [Position], [Description]) VALUES (1, 1, N'Setting', 0, N'Configuration Module')
+INSERT [dbo].[Tabs] ([PocModule_Id], [Id], [TabName], [Position], [Description]) VALUES (2, 3, N'Requests', 0, N'Requests Module')
+INSERT [dbo].[Tabs] ([PocModule_Id], [Id], [TabName], [Position], [Description]) VALUES (3, 4, N'Approvals', 0, N'Request Approvals')
+INSERT [dbo].[Tabs] ([PocModule_Id], [Id], [TabName], [Position], [Description]) VALUES (4, 5, N'Report', 0, N'Report')
+SET IDENTITY_INSERT [dbo].[Tabs] OFF
+/****** Object:  Table [dbo].[Vehicles]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Vehicles](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[PlateNo] [nvarchar](50) NULL,
+	[Status] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Vehicles_1] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Vehicles] ON
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (1, N'ACX  5603', N'Active')
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (2, N'ADA 7362', N'Active')
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (3, N'ADA 3818', N'Active')
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (4, N'ADL 7445', N'Active')
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (5, N'ACI 5979', N'Active')
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (6, N'ACY 4023', N'Active')
+INSERT [dbo].[Vehicles] ([ID], [PlateNo], [Status]) VALUES (7, N'HIRED  VEHICLE', N'Active')
+SET IDENTITY_INSERT [dbo].[Vehicles] OFF
+/****** Object:  Table [dbo].[ApprovalSettings]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ApprovalSettings](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RequestType] [nvarchar](50) NULL,
+	[CriteriaCondition] [nvarchar](50) NULL,
+	[Value] [int] NULL,
+	[Value2] [int] NULL,
+	[ApprovalLevel] [int] NULL,
+	[CriteriaQuery] [nvarchar](100) NULL,
+ CONSTRAINT [PK_ApprovalSetting] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[ApprovalSettings] ON
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (1, N'Vehicle Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (2, N'Leave Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (3, N'Purchase Request', N'<', 500, NULL, NULL, N'< 500')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (4, N'Purchase Request', N'Between', 500, 5000, NULL, N'Between 500 And 5000')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (5, N'Purchase Request', N'>', 5000, NULL, NULL, N'> 5000')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (9, N'CashPayment Request', N'<', 300, NULL, NULL, N'< 300')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (12, N'TravelAdvance Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (13, N'ExpenseLiquidation Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (14, N'PaymentReimbursement Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (15, N'OperationalControl Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (16, N'BankPayment Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (17, N'Purchase Request', N'Payment', 0, NULL, NULL, N'Payment 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (18, N'CostSharing Request', N'None', 0, NULL, NULL, N'None 0')
+INSERT [dbo].[ApprovalSettings] ([Id], [RequestType], [CriteriaCondition], [Value], [Value2], [ApprovalLevel], [CriteriaQuery]) VALUES (19, N'CashPayment Request', N'>', 300, NULL, NULL, N'> 300')
+SET IDENTITY_INSERT [dbo].[ApprovalSettings] OFF
+/****** Object:  Table [dbo].[ApprovalLevels]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ApprovalLevels](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ApprovalSetting_Id] [int] NULL,
+	[EmployeePosition_Id] [int] NULL,
+	[WorkflowLevel] [int] NULL,
+	[Will] [nvarchar](50) NULL,
+ CONSTRAINT [PK_ApprovalLevels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[ApprovalLevels] ON
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (1, 1, 4, 0, N'Complete')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (2, 2, 3, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (3, 2, 4, 0, N'Issue')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (4, 3, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (5, 3, 18, 0, N'Complete')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (6, 4, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (7, 4, 18, 0, N'Prepare')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (8, 4, 4, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (9, 4, 6, 0, N'Authorize')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (10, 4, 18, 0, N'Complete')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (11, 5, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (12, 5, 18, 0, N'Prepare')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (13, 5, 6, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (14, 5, 7, 0, N'Authorize')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (15, 5, 18, 0, N'Complete')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (18, 7, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (19, 7, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (20, 8, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (21, 8, 6, 0, N'Authorize')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (22, 8, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (23, 9, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (27, 10, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (28, 10, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (29, 11, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (30, 11, 6, 0, N'Authorize')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (31, 11, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (32, 12, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (33, 12, 6, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (35, 12, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (37, 14, 16, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (38, 15, 6, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (39, 15, 7, 0, N'Authorize')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (40, 16, 6, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (41, 16, 7, 0, N'Authorize')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (42, 16, 16, 0, N'Complete')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (43, 17, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (44, 17, 18, 0, N'Complete')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (45, 15, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (46, 18, 6, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (47, 18, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (48, 9, 4, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (49, 9, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (50, 19, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (51, 19, 6, 0, N'Review')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (52, 19, 16, 0, N'Pay')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (53, 13, 10, 0, N'Approve')
+INSERT [dbo].[ApprovalLevels] ([Id], [ApprovalSetting_Id], [EmployeePosition_Id], [WorkflowLevel], [Will]) VALUES (54, 13, 16, 0, N'Pay')
+SET IDENTITY_INSERT [dbo].[ApprovalLevels] OFF
+/****** Object:  Table [dbo].[Accounts]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Accounts](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[AccountNo] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Accounts] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+SET IDENTITY_INSERT [dbo].[Accounts] ON
+INSERT [dbo].[Accounts] ([Id], [Name], [AccountNo]) VALUES (1, N'Barclays Main', N'2157 1014238')
+INSERT [dbo].[Accounts] ([Id], [Name], [AccountNo]) VALUES (2, N'Barclays SUB', N'2157 1911697')
+INSERT [dbo].[Accounts] ([Id], [Name], [AccountNo]) VALUES (3, N'Barclays Cash', N'CASH')
+SET IDENTITY_INSERT [dbo].[Accounts] OFF
+/****** Object:  StoredProcedure [dbo].[UpdateTabPosition]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateTabPosition](
+	@TabId INT,
+	@Direction INT)
+AS
+BEGIN
+SET NOCOUNT ON;
+
+DECLARE @LeftTabID INT         
+DECLARE @CurrentTabPosition INT            
+
+DECLARE @SortOrderTable TABLE (TabID INT,  SortOrder INT IDENTITY) 
+
+INSERT INTO @SortOrderTable (TabID) SELECT t.TabId FROM Tab t ORDER BY t.Position
+         
+SELECT @CurrentTabPosition = SortOrder FROM  @SortOrderTable  WHERE @TabId = TabID
+
+	IF(@Direction = 1)
+	BEGIN 
+	   
+		SELECT TOP 1 @LeftTabID = TabID FROM  @SortOrderTable
+		WHERE SortOrder < ISNULL(@CurrentTabPosition, 0) AND (@TabId <> TabID)          
+		ORDER BY SortOrder DESC          
+
+		UPDATE tb SET Position = st.SortOrder
+		FROM Tab tb INNER JOIN @SortOrderTable st ON tb.TabId = st.TabID
+
+		IF( @LeftTabID IS NOT NULL)
+		BEGIN
+			UPDATE tb SET Position = Position + 1
+			FROM Tab tb WHERE TabId = @LeftTabID
+
+			UPDATE tb SET Position = Position - 1
+			FROM Tab tb WHERE TabId = @TabId
+		END
+	END
+	ELSE
+	BEGIN
+	
+		SELECT TOP 1 @LeftTabID = TabID FROM @SortOrderTable             
+		WHERE SortOrder > ISNULL(@CurrentTabPosition, 0) AND (@TabId <> TabID)          
+		ORDER BY SortOrder ASC         
+		
+		UPDATE tb SET Position = st.SortOrder
+		FROM Tab tb INNER JOIN @SortOrderTable st ON tb.TabId = st.TabID
+
+		IF( @LeftTabID IS NOT NULL)
+		BEGIN
+			UPDATE tb SET Position = Position - 1
+			FROM Tab tb WHERE TabId = @LeftTabID
+
+			UPDATE tb SET Position = Position + 1
+			FROM Tab tb WHERE TabId = @TabId
+		END
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[PimaTestDoneCounter]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[PimaTestDoneCounter]
+AS
+BEGIN
+	SET NOCOUNT ON;
+DECLARE @InsTestTable TABLE(Id INT, FacilityId INT, InstrumentId INT, TestId INT, TestType NVARCHAR(24),  Month INT, Year INT)
+
+INSERT INTO @InsTestTable(Id,FacilityId, InstrumentId, TestId, TestType, Month, Year)
+SELECT 
+Id,
+FacilityId,
+(SELECT InstrumentId FROM FacilityDevice WHERE DeviceId = FacilityInstrumentId) AS InsID, 
+0 as TId,
+CASE WHEN AssayName = 'PIMA_CD4'
+	THEN 'Real_Test'
+	ELSE 'Control_Test'
+END AS TType,  
+Month(ResultDate) as M, 
+Year (ResultDate) as Y
+FROM Assay
+WHERE IsCounted = 0 OR IsCounted IS NULL
+
+UPDATE I SET 
+I.TestId = T.TestId
+FROM Test as T INNER JOIN @InsTestTable as I on T.InstrumentId = I.InstrumentId AND T.TestType = I.TestType
+
+DELETE @InsTestTable WHERE TestId = 0
+
+UPDATE a SET
+a.IsCounted = 1
+FROM Assay as a INNER JOIN @InsTestTable as I on a.Id = I.Id
+
+DECLARE @SummaryOfInsTestTable TABLE(FacilityId INT, InstrumentId INT, TestId INT, TestType NVARCHAR(24), NoTestDone INT,  Month INT, Year INT, Exported BIT)
+
+INSERT INTO @SummaryOfInsTestTable(FacilityId, InstrumentId, TestId, NoTestDone, Month, Year)
+SELECT FacilityId, InstrumentId, TestId, COUNT(*), Month, Year
+FROM @InsTestTable 
+GROUP BY FacilityId, Year, Month , InstrumentId , TestId 
+
+UPDATE I SET
+I.TestType = T.TestType
+FROM @SummaryOfInsTestTable  as I INNER JOIN Test as T on I.TestId = T.TestId
+
+UPDATE T SET
+T.NoTestDone = T.NoTestDone + I.NoTestDone
+FROM TestDone  as T INNER JOIN @SummaryOfInsTestTable as I on 
+T.FacilityId = I.FacilityId AND  T.InstrumentId = I.InstrumentId AND T.TestId = I.TestId AND T.Month = I.Month AND T.Year = I.Year 
+
+UPDATE I SET
+I.Exported = 1
+FROM @SummaryOfInsTestTable  as I INNER JOIN TestDone  as T on 
+T.FacilityId = I.FacilityId AND  T.InstrumentId = I.InstrumentId AND T.TestId = I.TestId AND T.Month = I.Month AND T.Year = I.Year 
+
+
+INSERT INTO TestDone(FacilityId, InstrumentId, TestId, NoTestDone, Month, Year)
+SELECT FacilityId, InstrumentId, TestId, NoTestDone, Month, Year  
+FROM @SummaryOfInsTestTable  
+WHERE Exported <> 1 
+
+
+
+END
+GO
+/****** Object:  Table [dbo].[SupplierTypes]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SupplierTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierTypeName] [nvarchar](50) NULL,
+ CONSTRAINT [PK_SupplierTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[SupplierTypes] ON
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (1, N'Banks')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (3, N'Building& Maintanence')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (5, N'Vehicle Hire')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (6, N'Catering Services')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (7, N'Cleaning Services')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (8, N'Clinical Supplies')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (9, N'IT Sales')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (10, N'Courier Services')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (11, N'Hotels/Lodges')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (12, N'Insurance')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (13, N'Internet')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (14, N'IT/Network/Printer Repairs')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (15, N'Medical Services')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (16, N'Office Furniture')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (17, N'Pay roll and benefits')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (18, N'Printing')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (19, N'Print designers')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (20, N'Publications')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (21, N'Removals')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (22, N'Security')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (23, N'Stationery')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (24, N'Travel ')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (25, N'Telecoms')
+INSERT [dbo].[SupplierTypes] ([Id], [SupplierTypeName]) VALUES (26, N'Vehicle Purchasing, Service & Maintenance')
+SET IDENTITY_INSERT [dbo].[SupplierTypes] OFF
+/****** Object:  Table [dbo].[Suppliers]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Suppliers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierType_Id] [int] NULL,
+	[SupplierName] [nvarchar](100) NULL,
+	[SupplierAddress] [nvarchar](100) NULL,
+	[SupplierContact] [nvarchar](100) NULL,
+	[Email] [nvarchar](100) NULL,
+	[ContactPhone] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Supplier] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Suppliers] ON
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (1, 1, N'Barclays Bank', N'Barclays Bank NGO  Centre  Mt Pleasant bus/park', N'', NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (2, 3, N'Chris Hugill', N'Winchester Road, Belvedere', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (3, 3, N'Mc Wood & McNish Shopfitters', N'110 Lyton Road, Workington, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (4, 3, N'Makuyana Carpenters and Builders', N'2 Barrow Road, Southerton, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (5, 3, N'Kevin The Plumber', N'18 Woodholme Road, Emerald Hills, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (6, 3, N'Kenny Murray', N'Kenny Murray Electricals', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (7, 3, N'Blind Décor', N'43 Robison Manyika Way Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (8, 3, N'Quiprave Investment', N'No. 2 Henry Work, Marlborough', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (9, 5, N'Excellence Car Hire', N'20 Cleverland Road Milton Park Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (10, 5, N'Repon Travel and Tours', N'Corner Chinamano / Mazoe Street', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (11, 5, N'Sunny Taxis', N'Corner Chinamano / Mazoe Street', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (12, 6, N'Café Nush Confectionery', N'Shop 1 Vera Mall, Avondale Shopping Centre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (13, 6, N'Kwamambo ', N' 40 Cork Road Avondale Hre  ', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (14, 6, N'Holiday Inn - Out Catering', N'Corner Samora Machel/Fifth Street', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (15, 6, N'Café Espresso', N'49 Cork Rd Avondale', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (16, 6, N'Nourish Gourmet', N'35 Moorgate, Northwood, the Chase West, Emerald Hills, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (17, 6, N'Watercoolers (pvt)', N'5Harvey Brown Milton Park Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (18, 7, N'Maxclean', N' No 1 sunflower Building  Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (19, 8, N'Medsure Health Care', N'15 Lobengula Road Southerton Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (20, 8, N'Surgimed', N'13 George drive Massa Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (21, 9, N'Global Holizons', N'  168 Chinhoyi Street Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (22, 9, N'Makes IT', N'162 Hebert Chitepo Ave Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (23, 9, N'Arkmate', N' 5 Winceseter Rd Belvedere', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (24, 9, N'Omin Africa', N'27 Chiremba Rd  Hilside Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (25, 9, N'Matrix', N'10 Modden Close Emerald Hill Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (26, 9, N'Ronny Transformers', N'87 Chinhoyi Street Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (27, 10, N'Federal Express', N' 100 Prince Edward Street  Milton Park Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (28, 11, N'Meikles Hotel', N'3rd Street/Jason Moyo Avenue, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (29, 11, N'Holiday Inn Harare ', N' Cnr Fifth 7 Samora Machel Ave', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (30, 11, N'Crown Plaza Monomotapa', N'Corner Park Street/Julius Nyerere Way, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (31, 11, N'Rainbow towers Hotel Hre ', N' 1 Pennefather Ave off S.Machel Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (32, 11, N'Bowood Lodge', N' 8 Bowood Road Mt Pleasant Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (33, 12, N'Trister  Insurance', N'ReNaissance Park Borrowdale', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (34, 13, N'Utande', N'Level 9 Pegasus House, 52-54 Samora Machel Avenue', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (35, 14, N'Creative Computers', N'167 King George Road Avondale Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (36, 14, N'Worldnet Solutions P/L', N'20 Harrow Road, Masasa, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (37, 14, N'Enet Solutions - Software and Computers', N'3rd Floor, Green Bridge, Eastgate, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (38, 14, N'Xerox - Printers', N'168 Samora Machel West Avenue, Belvedere, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (39, 15, N'Cimas Medical Aid Socity', N' Cimas house Cnr J.Moyo &Hre Strret Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (40, 15, N'MARS', N'2 Fairbridge Ave Belgravia Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (41, 16, N'Seisure Enterprise', N'1st Floor Benhay Art House', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (42, 16, N'Furniture Discount Centre', N'Standard House Cameron Street', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (43, 16, N'Nitzel Investments', N'7 Livingstone Inn Cnr 3rd Livingstone Ave', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (44, 17, N'AutoPay Zim,', N' Northridge Park Borrowdale Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (45, 17, N'NSSA', N'2nd Floor, NSSA Building, Corner Julius Nyerere Way/2nd Street, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (46, 18, N'Kwik Print ', N'Shop 14 Southampton Hse cnr 1st  &Nkwame', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (47, 18, N'Lighthouse Print', N'16 Lawson Ave Milton Park Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (48, 18, N'Graphtec', N'8 Victoria Drive Newlands Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (49, 18, N'Print Works', N'Bond Stree Shops The Chase Mt Pleasant', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (50, 18, N'Somo Business Centre', N'32 Cork Road Avondale Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (51, 19, N'Daniela Cristofori', N'Rua de Sidano 61 Maputo, Mozambique', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (52, 19, N'Farai Wallace', N'"Unit No.10 _ 75 Roberts Drive, Msasa, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (53, 20, N'The Herald', N'Corner Sam Mujoma and George Silundika Avenue, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (54, 21, N'Glens Removals', N'27 Watts Road  New Ardbenne Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (55, 21, N'FFZ Logistics', N'9-13 Crester Road Southerton Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (56, 21, N'AGS Frasers International', N'23 Kenmark Crescent, Bluffhill Industrial Park, Harare ', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (57, 21, N'Stuttafords Removals', N'Southerton Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (58, 21, N'SafeSecure', N'Avondale Shopping Centre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (59, 21, N'Chubb Safe Zimbabwe', N'4 Conald Rd Graniside Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (60, 22, N'Safeguard Engineering ', N'58 Rhodesville Ave  Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (61, 22, N'Safeguard Alams', N'58 Rhodesville Ave  Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (62, 22, N'J and P Security', N'17 Walterhill Avenue, Eastlea, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (63, 23, N'Shorebeam Fire Engineers', N'94 Cameroon Street Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (64, 23, N'First Pack', N'127 Masocha Ndlovu Cnr  Seke Rd', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (65, 23, N'Bamm Stationers', N' 35 Bishop Gaul Ave Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (66, 23, N'Rubber Stamp', N'9 kelvin   North Road Graniteside Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (67, 23, N'Rank Zimbabwe ', N'108 Coventry Road Workington Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (68, 23, N'Stationary Express', N'5 Coventry Road Greyston Park', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (69, 24, N'Premier Travel and Tours', N'24 Cleveland Road, Milton Park, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (70, 25, N'Econet  Wireless ', N'3 Kelvin Close, Graniteside, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (71, 25, N'Liquid Telecoms', N'5th Floor, ZB Life Towers, 77 Jason Moyo Avenue, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (72, 25, N'Commaf Holdings', N'89 Kelvin Road South, Graniteside, Harare', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (73, 26, N'Mike Haris Toyota', N' 111 Lomagundi Rd Greencroft Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (74, 26, N'Croco Nissan', N'100 Seke Road  Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (75, 26, N'Toyota Zimbabwe', N' 153 R.Mugabe Rd Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (76, 26, N'Croco Toyota ', N'19 Nuffild Rd Workington Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (77, 26, N'Taylor''s Canvas', N'41 Coventry Rd Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (78, 26, N'Rhino Linings ', N'117 Lomagundi Road  Grencroft Hre', NULL, NULL, NULL)
+INSERT [dbo].[Suppliers] ([Id], [SupplierType_Id], [SupplierName], [SupplierAddress], [SupplierContact], [Email], [ContactPhone]) VALUES (79, 26, N'Riders For Health', N'Munhondo Street Ruwa', NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[Suppliers] OFF
+/****** Object:  Table [dbo].[Roles]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Roles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](32) NOT NULL,
+	[PermissionLevel] [int] NOT NULL,
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Roles] ON
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (1, N'Administrator', 8)
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (2, N'Requester', 6)
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (3, N'Preparer', 6)
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (4, N'Approver', 6)
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (5, N'Reviewer', 6)
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (6, N'Authorizer', 6)
+INSERT [dbo].[Roles] ([Id], [Name], [PermissionLevel]) VALUES (7, N'Payer', 14)
+SET IDENTITY_INSERT [dbo].[Roles] OFF
+/****** Object:  UserDefinedFunction [dbo].[fnGetInventoryMovement]    Script Date: 12/30/2015 02:59:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[fnGetInventoryMovement] 
+(
+@FromDate DATETIME,
+@ToDate   DATETIME
+)
+RETURNS  @InventoryTable TABLE (
+ProductTypeId INT, 
+ProductID INT, 
+DocumentDateTime DATETIME, 
+Issued Decimal, 
+Returned Decimal, 
+ProvinceId INT , 
+DistrictId INT, 
+FacilityId INT)
+AS
+BEGIN
+	INSERT INTO @InventoryTable(
+		ProductTypeId, ProductID, DocumentDateTime, Issued, Returned, ProvinceId, DistrictId, FacilityId
+    )SELECT (select ProductTypeId from Product where ProductId =  O.ProductID),
+     O.ProductID, O.DocumentDateTime, O.Quantity, 0.0, D.RegionId,
+	 (select DistrictId from Facility where FacilityId = D.SiteId), D.SiteId		
+	 FROM   InventoryOutgoingLine AS O INNER JOIN
+                      DocumentLine AS L ON O.DocumentLineID = L.DocumentLineID INNER JOIN
+                      [Document] AS D ON L.DocumentID = D.DocumentID 
+	 WHERE (O.IsVoided = 0) AND (O.DocumentDateTime BETWEEN @FromDate AND @ToDate)
+	 
+	 INSERT INTO @InventoryTable(
+		ProductTypeId, ProductID, DocumentDateTime, Issued, Returned, ProvinceId, DistrictId, FacilityId
+    )SELECT (select ProductTypeId from Product where ProductId =  O.ProductID),
+     O.ProductID, O.DocumentDateTime,0.0, O.Quantity, D.RegionId,
+	 (select DistrictId from Facility where FacilityId = D.SiteId), D.SiteId		
+	 FROM   InventoryIncomingLine AS O INNER JOIN
+                      DocumentLine AS L ON O.DocumentLineID = L.DocumentLineID INNER JOIN
+                      [Document] AS D ON L.DocumentID = D.DocumentID 
+	 WHERE (O.IsVoided = 0) AND (O.DocumentDateTime BETWEEN @FromDate AND @ToDate)
+	
+	RETURN 
+END
+GO
+/****** Object:  Table [dbo].[PopupMenus]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PopupMenus](
+	[Tab_Id] [int] NOT NULL,
+	[Node_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Position] [int] NOT NULL,
+ CONSTRAINT [PK_PopupMenus] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  StoredProcedure [dbo].[SPTravelAdvanceReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPTravelAdvanceReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+ SELECT  distinct TravelAdvanceRequests.RequestDate as Date,TravelAdvanceRequests.TravelAdvanceNo as Travel_ID , ItemAccounts.AccountName as Description,ItemAccounts.AccountCode,Projects.ProjectCode as Project_ID,Grants.GrantCode as Grant_ID ,TravelAdvanceRequests.TotalTravelAdvance as Total_Amount
+                                From  [dbo].TravelAdvanceRequests 
+                                                 Inner join TravelAdvanceRequestDetails on TravelAdvanceRequests.Id = TravelAdvanceRequestDetails.TravelAdvanceRequest_Id 
+                                                 Inner join TravelAdvanceCosts on TravelAdvanceRequestDetails.Id = TravelAdvanceCosts.TravelAdvanceRequestDetail_Id 
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= TravelAdvanceCosts.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = TravelAdvanceRequests.Project_Id 
+                                                 Inner join Grants on Grants.Id = TravelAdvanceRequests.Grant_Id 
+                                                where TravelAdvanceRequests.ProgressStatus = 'Completed' AND
+                                               
+                                                1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When TravelAdvanceRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPPurchaseReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPPurchaseReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+ SELECT PODate as Date,RequestNo as Purchase_Request_Ref,PoNumber as Purchase_Order, ItemAccounts.AccountCode,ItemAccounts.AccountName as Description,Projects.ProjectCode as Project_ID ,Grants.GrantCode as Grant_ID,PurchaseOrderDetails.TotalCost
+                                                  From  [dbo].PurchaseRequests
+                                                  Inner join PurchaseOrders on PurchaseOrders.Id = PurchaseRequests.Id 
+                                                  Inner join PurchaseRequestDetails on PurchaseRequestDetails.PurchaseRequest_Id = PurchaseRequests.Id 
+                                                  Inner Join PurchaseOrderDetails on PurchaseOrderDetails.PurchaseOrder_Id = PurchaseOrders.Id 
+                                                  Inner Join ItemAccounts on ItemAccounts.Id = PurchaseOrderDetails.ItemAccount_Id
+                                                  Inner Join Projects on Projects.Id = PurchaseRequestDetails.Project_Id 
+                                                  Inner Join Grants on Grants.Id = PurchaseRequestDetails.Grant_Id 
+                                                  where PurchaseRequests.ProgressStatus = 'Completed' AND 
+                                                  1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When PurchaseOrders.PODate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPLiquidationReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPLiquidationReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+ SELECT ExpenseLiquidationRequests.RequestDate as Date,TravelAdvanceRequests.TravelAdvanceNo as Travel_ID , ItemAccounts.AccountName as Description,ItemAccounts.AccountCode,Projects.ProjectCode as Project_ID,Grants.GrantCode as Grant_ID,ExpenseLiquidationRequestDetails.ActualExpenditure as Amount
+                                From  [dbo].TravelAdvanceRequests 
+                                                 Inner join ExpenseLiquidationRequests on TravelAdvanceRequests.Id = ExpenseLiquidationRequests.Id 
+                                                 Inner join ExpenseLiquidationRequestDetails on ExpenseLiquidationRequestDetails.ExpenseLiquidationRequest_Id = ExpenseLiquidationRequests.Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= ExpenseLiquidationRequestDetails.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = ExpenseLiquidationRequestDetails.Project_Id
+                                                 Inner join Grants on Grants.Id = ExpenseLiquidationRequestDetails.Grant_Id 
+                                                 
+                                                where ExpenseLiquidationRequests.ProgressStatus = 'Completed' AND
+                                               1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When ExpenseLiquidationRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPLeaveReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPLeaveReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+ SELECT AppUsers.FirstName + ' ' +  AppUsers.LastName as StaffName, 
+                                [Forward] as Leave_Days_Opening_Balance, 
+                                LeaveTypes.LeaveTypeName as Leave_Type, 
+                                CAST(LeaveRequests.DateFrom as nvarchar) + ' ' + CAST(LeaveRequests.DateTo as nvarchar) as Period_Leave_Taken, 
+                                RequestedDays as Number_of_Leave_Taken , 
+                               [Balance] as Leave_Balance_Carried_Forward 
+                                FROM [dbo].[LeaveRequests] Inner join AppUsers on AppUsers.Id = [LeaveRequests].Requester
+                                Inner Join LeaveTypes on LeaveTypes.Id = [LeaveRequests].LeaveType_Id 
+                                where [LeaveRequests].ProgressStatus = 'Completed'  AND
+                                1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When LeaveRequests.RequestedDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPExportTravelAdvance]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPExportTravelAdvance] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)='',
+	@ExportType nvarchar(100)=''
+AS
+
+  SELECT distinct Accounts.AccountNo as BankAccount,AppUsers.FirstName + ' ' + AppUsers.LastName as Payee,TravelAdvanceRequests.RequestDate as TransactionDate,TravelAdvanceRequests.TravelAdvanceNo as RefNumber,TravelAdvanceRequests.PurposeOfTravel as Memo,ItemAccounts.AccountCode as ExpensesAccount,TravelAdvanceRequests.TotalTravelAdvance as ExpensesAmount, Projects.ProjectCode as ExpensesClass,AppUsers.FirstName + ' ' + AppUsers.LastName + ' ' + Grants.GrantCode as ExpensesCustomer,TravelAdvanceRequests.TotalTravelAdvance as Total_Amount
+                               From  [dbo].TravelAdvanceRequests 
+                                                 Inner join TravelAdvanceRequestDetails on TravelAdvanceRequests.Id = TravelAdvanceRequestDetails.TravelAdvanceRequest_Id
+                                                 Inner join TravelAdvanceCosts on TravelAdvanceRequestDetails.Id = TravelAdvanceCosts.TravelAdvanceRequestDetail_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= TravelAdvanceCosts.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = TravelAdvanceRequests.Project_Id
+                                                 Inner join Grants on Grants.Id = TravelAdvanceRequests.Grant_Id 
+                                                 Inner join Accounts on Accounts.Id = TravelAdvanceRequests.Account_Id
+                                                 Inner join AppUsers on AppUsers.Id = TravelAdvanceRequests.AppUser_Id
+                                                 where TravelAdvanceRequests.ExportStatus = @ExportType AND TravelAdvanceRequests.ProgressStatus = 'Completed'  AND
+                                                 1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When TravelAdvanceRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPExportLiquidationReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPExportLiquidationReport] 
+@LiquidationId int
+AS
+
+ SELECT top 1 TravelAdvanceRequests.TravelAdvanceNo as RefNumber,TravelAdvanceRequests.RequestDate as TransactionDate ,ItemAccounts.AccountCode +'.'+ ItemAccounts.AccountName Account,TravelAdvanceRequests.TotalTravelAdvance as Debt ,'0' as Credit,TravelAdvanceRequests.PurposeOfTravel as Memo,Grants.Donor+':'+Grants.GrantCode GrantName
+                                From  [dbo].TravelAdvanceRequests 
+                                                 Inner join ExpenseLiquidationRequests on TravelAdvanceRequests.Id = ExpenseLiquidationRequests.Id 
+                                                 Inner join TravelAdvanceRequestDetails on TravelAdvanceRequests.Id = TravelAdvanceRequestDetails.TravelAdvanceRequest_Id 
+                                                 Inner join TravelAdvanceCosts on TravelAdvanceRequestDetails.Id = TravelAdvanceCosts.TravelAdvanceRequestDetail_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= TravelAdvanceCosts.ItemAccount_Id
+                                                 Inner join Projects on Projects.Id = TravelAdvanceRequests.Project_Id
+                                                 Inner join Grants on Grants.Id = TravelAdvanceRequests.Grant_Id 
+                                                where ExpenseLiquidationRequests.ProgressStatus = 'Completed' AND
+                                                      ExpenseLiquidationRequests.Id=@LiquidationId
+                                                      
+Union all
+
+SELECT TravelAdvanceRequests.TravelAdvanceNo as RefNumber,TravelAdvanceRequests.RequestDate as TransactionDate ,LItemAccount.AccountCode+'.'+ LItemAccount.AccountName as Account,'0' as Debt ,ExpenseLiquidationRequestDetails.ActualExpenditure as Credit,TravelAdvanceRequests.PurposeOfTravel as Memo,Grants.Donor+':'+Grants.GrantCode GrantName
+                                From  [dbo].TravelAdvanceRequests 
+                                                 Inner join ExpenseLiquidationRequests on TravelAdvanceRequests.Id = ExpenseLiquidationRequests.Id 
+                                                 --Inner join TravelAdvanceRequestDetails on TravelAdvanceRequests.Id = TravelAdvanceRequestDetails.TravelAdvanceRequest_Id 
+                                                 --Inner join TravelAdvanceCosts on TravelAdvanceRequestDetails.Id = TravelAdvanceCosts.TravelAdvanceRequestDetail_Id
+                                                 
+                                                 Inner join Projects on Projects.Id = TravelAdvanceRequests.Project_Id
+                                                 Inner join Grants on Grants.Id = TravelAdvanceRequests.Grant_Id 
+                                                 Inner Join ExpenseLiquidationRequestDetails on ExpenseLiquidationRequests.Id = ExpenseLiquidationRequestDetails.ExpenseLiquidationRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= ExpenseLiquidationRequestDetails.ItemAccount_Id
+                                                 Inner Join ItemAccounts as LItemAccount on LItemAccount.Id = ExpenseLiquidationRequestDetails.ItemAccount_Id
+                                                where ExpenseLiquidationRequests.ProgressStatus = 'Completed' AND
+                                                      ExpenseLiquidationRequests.Id=@LiquidationId
+GO
+/****** Object:  StoredProcedure [dbo].[SPExportCostSharingPayment]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPExportCostSharingPayment] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)='',
+	@ExportType nvarchar(100)=''
+AS
+
+  SELECT CostSharingRequests.Payee as Vendor,CostSharingRequests.RequestDate as TransactionDate,CostSharingRequests.RequestNo as RefNumber,CostSharingRequests.Description as Memo,ItemAccounts.AccountCode as ExpensesAccount,CostSharingRequestDetails.SharedAmount as ExpensesAmount,Projects.ProjectCode as ExpensesClass
+                               From  [dbo].CostSharingRequests 
+                                                 Inner join CostSharingRequestDetails on CostSharingRequests.Id = CostSharingRequestDetails.CostSharingRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= CostSharingRequests.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = CostSharingRequestDetails.Project_Id 
+                                                 --Inner join Grants on Grants.Id = CostSharingRequestDetails.Grant_Id 
+                                                 
+                                                 where CostSharingRequests.ExportStatus = @ExportType AND CostSharingRequests.ProgressStatus = 'Completed' AND CostSharingRequests.PaymentReimbursementStatus='Retired' AND
+                                                 1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When CostSharingRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPExportCashPayment]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPExportCashPayment] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)='',
+	@ExportType nvarchar(100)=''
+AS
+
+  SELECT CashPaymentRequests.Payee as Vendor,CashPaymentRequests.RequestDate as TransactionDate,CashPaymentRequests.RequestNo as RefNumber,CashPaymentRequests.Description as Memo,ItemAccounts.AccountCode as ExpensesAccount,CashPaymentRequestDetails.ActualExpendture as ExpensesAmount,Projects.ProjectCode as ExpensesClass , Grants.GrantCode as ExpensesCustomer
+                               From  [dbo].CashPaymentRequests 
+                                                 Inner join CashPaymentRequestDetails on CashPaymentRequests.Id = CashPaymentRequestDetails.CashPaymentRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= CashPaymentRequestDetails.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = CashPaymentRequestDetails.Project_Id 
+                                                 Inner join Grants on Grants.Id = CashPaymentRequestDetails.Grant_Id 
+                                                 
+                                                 where CashPaymentRequests.ExportStatus = @ExportType AND CashPaymentRequests.ProgressStatus = 'Completed' AND CashPaymentRequests.PaymentReimbursementStatus='Retired' AND
+                                                 1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When CashPaymentRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPExportBankPayment]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPExportBankPayment] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)='',
+	@ExportType nvarchar(100)=''
+AS
+
+  SELECT Accounts.AccountNo as BankAccount,Beneficiaries.BeneficiaryName as Payee,OperationalControlRequests.RequestDate as TransactionDate,OperationalControlRequests.RequestNo as RefNumber,OperationalControlRequests.Description,ItemAccounts.AccountCode as Account,OperationalControlRequestDetails.ActualExpendture as Total_Amount, Projects.ProjectCode as Project_ID,Grants.GrantCode as Grant_ID
+                               From  [dbo].OperationalControlRequests 
+                                                 Inner join OperationalControlRequestDetails on OperationalControlRequests.Id = OperationalControlRequestDetails.OperationalControlRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= OperationalControlRequestDetails.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = OperationalControlRequestDetails.Project_Id 
+                                                 Inner join Grants on Grants.Id = OperationalControlRequestDetails.Grant_Id 
+                                                 Inner join Accounts on Accounts.Id = OperationalControlRequests.Account_Id
+                                                 Inner Join Beneficiaries on Beneficiaries.Id = OperationalControlRequests.Beneficiary_Id
+                                                 where OperationalControlRequests.ExportStatus = @ExportType AND OperationalControlRequests.ProgressStatus = 'Completed' AND OperationalControlRequests.PaymentReimbursementStatus='Retired' AND
+                                                 1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When OperationalControlRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPCostSharingPaymentReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPCostSharingPaymentReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+  SELECT CostSharingRequests.RequestDate as Date,CostSharingRequests.RequestNo as RequestNo ,ItemAccounts.AccountName as Description,ItemAccounts.AccountCode,Projects.ProjectCode as Project_ID,Grants.GrantCode as Grant_ID,CostSharingRequestDetails.SharedAmount as total_Amount
+                               From  [dbo].CostSharingRequests 
+                                                 Inner join CostSharingRequestDetails on CostSharingRequests.Id = CostSharingRequestDetails.CostSharingRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= CostSharingRequests.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = CostSharingRequestDetails.Project_Id 
+                                                 Inner join ProGrants on Projects.Id = ProGrants.Project_Id 
+                                                 Inner join Grants on Grants.Id = ProGrants.Grant_Id 
+                                                 where CostSharingRequests.ProgressStatus = 'Completed' AND CostSharingRequests.PaymentReimbursementStatus='Retired'  AND
+                                                1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When CostSharingRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPCashPaymentReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPCashPaymentReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+  SELECT CashPaymentRequests.RequestDate as Date,CashPaymentRequests.RequestNo as Reference_No ,ItemAccounts.AccountName as Description,ItemAccounts.AccountCode,Projects.ProjectCode as Project_ID,Grants.GrantCode as Grant_ID,CashPaymentRequestDetails.ActualExpendture as total_Amount
+                               From  [dbo].CashPaymentRequests 
+                                                 Inner join CashPaymentRequestDetails on CashPaymentRequests.Id = CashPaymentRequestDetails.CashPaymentRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= CashPaymentRequestDetails.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = CashPaymentRequestDetails.Project_Id 
+                                                 Inner join ProGrants on Projects.Id = ProGrants.Project_Id 
+                                                 Inner join Grants on Grants.Id = ProGrants.Grant_Id 
+                                                 where CashPaymentRequests.ProgressStatus = 'Completed' AND CashPaymentRequests.PaymentReimbursementStatus = 'Retired'  AND
+                                                1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When CashPaymentRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SPBankPaymentReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPBankPaymentReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+  SELECT OperationalControlRequests.RequestNo as RequestNo,OperationalControlRequests.RequestDate as Request_Date,Accounts.AccountNo as BankAccount,Beneficiaries.BeneficiaryName as Payee,OperationalControlRequests.Description,ItemAccounts.AccountCode as Account,Projects.ProjectCode as Project_ID ,Grants.GrantCode as Grant_ID,OperationalControlRequestDetails.ActualExpendture as Total_Amount
+                               From  [dbo].OperationalControlRequests 
+                                                 Inner join OperationalControlRequestDetails on OperationalControlRequests.Id = OperationalControlRequestDetails.OperationalControlRequest_Id
+                                                 Inner Join ItemAccounts on ItemAccounts.Id= OperationalControlRequestDetails.ItemAccount_Id 
+                                                 Inner join Projects on Projects.Id = OperationalControlRequestDetails.Project_Id 
+                                                 Inner join Grants on Grants.Id = OperationalControlRequestDetails.Grant_Id 
+                                                 Inner join Accounts on Accounts.Id = OperationalControlRequests.Account_Id
+                                                 Inner Join Beneficiaries on Beneficiaries.Id = OperationalControlRequests.Beneficiary_Id
+                                                 where OperationalControlRequests.ProgressStatus = 'Completed' AND OperationalControlRequests.PaymentReimbursementStatus='Retired' AND
+                                                 1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When OperationalControlRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  Table [dbo].[TabRoles]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TabRoles](
+	[Tab_Id] [int] NOT NULL,
+	[Role_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ViewAllowed] [bit] NOT NULL,
+ CONSTRAINT [PK_TabRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[TabRoles] ON
+INSERT [dbo].[TabRoles] ([Tab_Id], [Role_Id], [Id], [ViewAllowed]) VALUES (1, 1, 1, 1)
+INSERT [dbo].[TabRoles] ([Tab_Id], [Role_Id], [Id], [ViewAllowed]) VALUES (5, 1, 4, 1)
+INSERT [dbo].[TabRoles] ([Tab_Id], [Role_Id], [Id], [ViewAllowed]) VALUES (3, 1, 6, 1)
+INSERT [dbo].[TabRoles] ([Tab_Id], [Role_Id], [Id], [ViewAllowed]) VALUES (3, 2, 7, 1)
+INSERT [dbo].[TabRoles] ([Tab_Id], [Role_Id], [Id], [ViewAllowed]) VALUES (4, 1, 8, 1)
+INSERT [dbo].[TabRoles] ([Tab_Id], [Role_Id], [Id], [ViewAllowed]) VALUES (4, 4, 9, 1)
+SET IDENTITY_INSERT [dbo].[TabRoles] OFF
+/****** Object:  Table [dbo].[TaskPans]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TaskPans](
+	[Tab_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](64) NOT NULL,
+	[Position] [int] NOT NULL,
+	[ImagePath] [nvarchar](255) NULL,
+ CONSTRAINT [PK_TaskPans] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[TaskPans] ON
+INSERT [dbo].[TaskPans] ([Tab_Id], [Id], [Title], [Position], [ImagePath]) VALUES (1, 1, N'List', 1, N'')
+INSERT [dbo].[TaskPans] ([Tab_Id], [Id], [Title], [Position], [ImagePath]) VALUES (3, 2, N'List', 1, N'')
+INSERT [dbo].[TaskPans] ([Tab_Id], [Id], [Title], [Position], [ImagePath]) VALUES (4, 3, N'List', 1, N'')
+INSERT [dbo].[TaskPans] ([Tab_Id], [Id], [Title], [Position], [ImagePath]) VALUES (5, 5, N'List', 1, N'')
+SET IDENTITY_INSERT [dbo].[TaskPans] OFF
+/****** Object:  Table [dbo].[NodeRoles]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NodeRoles](
+	[Node_Id] [int] NOT NULL,
+	[Role_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ViewAllowed] [bit] NOT NULL,
+	[EditAllowed] [bit] NOT NULL,
+ CONSTRAINT [PK_NodeRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[NodeRoles] ON
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (1, 1, 1, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (2, 1, 2, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (3, 1, 3, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (4, 1, 4, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (5, 1, 5, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (6, 1, 6, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (7, 1, 7, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (8, 1, 8, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (9, 1, 9, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (10, 1, 10, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (11, 1, 11, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (12, 1, 12, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (14, 1, 14, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (15, 1, 15, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (16, 1, 16, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (17, 1, 17, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (18, 1, 18, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (19, 1, 19, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (20, 1, 20, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (21, 1, 21, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (22, 1, 22, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (23, 1, 23, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (24, 1, 24, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (25, 1, 25, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (26, 1, 26, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (27, 1, 27, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (28, 1, 28, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (29, 1, 29, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (9, 2, 31, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (19, 2, 33, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (10, 1, 34, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (10, 4, 35, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (10, 5, 36, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (10, 6, 37, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (21, 1, 38, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (21, 4, 39, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (21, 5, 40, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (21, 6, 41, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (12, 1, 42, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (12, 2, 43, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (15, 1, 44, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (15, 2, 45, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (17, 1, 46, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (17, 2, 47, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (20, 1, 48, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (20, 2, 49, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (14, 1, 50, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (14, 3, 51, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (14, 4, 52, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (14, 5, 53, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (14, 6, 54, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (16, 1, 55, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (16, 3, 56, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (16, 4, 57, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (16, 5, 58, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (16, 6, 59, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (18, 1, 60, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (18, 3, 61, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (18, 4, 62, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (18, 5, 63, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (18, 6, 64, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (22, 1, 65, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (22, 3, 66, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (22, 4, 67, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (22, 5, 68, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (22, 6, 69, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (4, 1, 70, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (4, 1, 71, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (30, 1, 72, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 1, 77, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 2, 78, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 1, 79, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 2, 80, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 7, 81, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (34, 1, 82, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (34, 4, 83, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (34, 5, 84, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (34, 6, 85, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (34, 7, 86, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (37, 1, 97, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 7, 98, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 1, 99, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 1, 107, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 4, 108, 0, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 7, 109, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 1, 110, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 4, 111, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (38, 7, 112, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 1, 113, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 2, 114, 1, 0)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (33, 7, 115, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (39, 1, 116, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (40, 2, 117, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (41, 1, 118, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (41, 4, 119, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (41, 5, 120, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (41, 6, 121, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (41, 7, 122, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (42, 1, 123, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (42, 4, 124, 1, 1)
+GO
+print 'Processed 100 total records'
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (42, 5, 125, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (42, 6, 126, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (42, 7, 127, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (43, 1, 128, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (43, 4, 129, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (43, 5, 130, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (43, 6, 131, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (43, 7, 132, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (44, 1, 133, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (44, 4, 134, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (44, 5, 135, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (44, 6, 136, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (44, 7, 137, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (40, 1, 138, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (40, 2, 139, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (45, 1, 140, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (46, 1, 141, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (48, 1, 143, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (48, 3, 144, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (48, 4, 145, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (48, 5, 146, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (48, 6, 147, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (48, 7, 148, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (49, 1, 149, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (49, 3, 150, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (49, 4, 151, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (49, 5, 152, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (49, 6, 153, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (49, 7, 154, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (50, 1, 155, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (50, 3, 156, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (50, 4, 157, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (50, 5, 158, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (50, 6, 159, 1, 1)
+INSERT [dbo].[NodeRoles] ([Node_Id], [Role_Id], [Id], [ViewAllowed], [EditAllowed]) VALUES (50, 7, 160, 1, 1)
+SET IDENTITY_INSERT [dbo].[NodeRoles] OFF
+/****** Object:  Table [dbo].[AppUserRoles]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AppUserRoles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[AppUser_Id] [int] NOT NULL,
+	[Role_Id] [int] NOT NULL,
+ CONSTRAINT [PK_AppUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[AppUserRoles] ON
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (55, 22, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (56, 22, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (61, 25, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (62, 25, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (67, 15, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (68, 15, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (69, 15, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (70, 24, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (71, 24, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (72, 24, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (125, 17, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (126, 17, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (127, 17, 7)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (136, 18, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (137, 28, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (139, 29, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (148, 34, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (149, 35, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (154, 41, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (156, 43, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (157, 44, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (160, 47, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (162, 49, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (163, 50, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (164, 50, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (165, 50, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (166, 50, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (167, 50, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (175, 12, 1)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (176, 12, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (177, 12, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (178, 12, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (179, 12, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (180, 12, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (181, 14, 1)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (182, 14, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (183, 14, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (184, 14, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (185, 14, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (186, 14, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (187, 13, 1)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (188, 13, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (189, 13, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (190, 13, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (191, 13, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (192, 13, 7)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (193, 51, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (194, 52, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (216, 48, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (218, 42, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (220, 31, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (221, 36, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (232, 45, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (233, 45, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (234, 45, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (235, 45, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (237, 37, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (238, 2, 1)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (239, 2, 7)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (241, 46, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (242, 40, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (249, 19, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (250, 19, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (251, 19, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (252, 19, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (253, 19, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (262, 33, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (263, 33, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (264, 33, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (266, 38, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (267, 30, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (268, 23, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (269, 23, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (270, 23, 7)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (271, 16, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (272, 16, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (273, 10, 1)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (274, 10, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (275, 10, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (276, 10, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (277, 10, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (278, 10, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (279, 32, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (280, 20, 2)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (281, 20, 3)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (282, 20, 4)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (283, 20, 5)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (284, 20, 6)
+INSERT [dbo].[AppUserRoles] ([Id], [AppUser_Id], [Role_Id]) VALUES (285, 27, 2)
+SET IDENTITY_INSERT [dbo].[AppUserRoles] OFF
+/****** Object:  StoredProcedure [dbo].[ExtractDisplayNumberParts]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ExtractDisplayNumberParts] 
+    @displayValue NVARCHAR(60),        -- value to split 
+    @baseValue    NVARCHAR(60)  OUTPUT, 
+    @intPart      INT            OUTPUT,  
+    @validSeed  BIT      OUTPUT  
+AS 
+BEGIN 
+    DECLARE @Position INT
+    SET @validSeed = 0 
+    SET @Position = dbo.fnGetNumberSep(@displayValue) 
+    SET @baseValue   = LEFT(@displayValue, @Position) 
+    SET @intPart = cast(RIGHT(@displayValue, LEN(@displayValue) - @Position)as int)  
+   IF @intPart > 2000000000     
+   BEGIN        -- don't need to go in a loop here         
+       SET @Position = @Position - 1         
+       SET @intPart = cast(RIGHT(@displayValue, LEN(@displayValue) - @Position)as int) 
+   END 
+    IF (ISNULL(@intPart, 0) = 0)   
+       BEGIN    
+          IF (LEN(ISNULL(@baseValue, '')) = 0)   
+          BEGIN   
+               SELECT @validSeed = 1    
+           END   
+           ELSE   
+           BEGIN   
+           IF ( (LEN(ISNULL(@displayValue, '')) < 8) AND (RIGHT(ISNULL(@displayValue, ''), 1) = '0'))   
+                OR ( (LEN(ISNULL(@displayValue, '')) <> LEN(ISNULL(@baseValue, ''))) AND (LEN(ISNULL(@displayValue, '')) - LEN(ISNULL(@baseValue, '')) < 8) )   
+             BEGIN   
+                 SELECT @validSeed = 1    
+             END   
+           END   
+         END 
+		 ELSE 
+		 BEGIN 
+			IF (ISNULL(@intPart, 0) >0)   
+			BEGIN   
+				SELECT @validSeed = 1    
+			END   
+        END   
+         
+   END
+GO
+/****** Object:  StoredProcedure [dbo].[CreateNumberSequence]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[CreateNumberSequence]
+     @typeName   NVARCHAR(128), 
+     @startValue NVARCHAR(60), 
+     @startAlpha NVARCHAR(50), 
+     @startInt   INT,           
+     @numSeqID   INT OUTPUT     
+AS 
+BEGIN       
+    DECLARE @validSeed BIT 
+    EXECUTE ExtractDisplayNumberParts @startValue, @startAlpha OUTPUT, @startInt OUTPUT,  @validSeed OUTPUT 
+    
+    IF @validSeed = 0 
+     BEGIN  
+        SELECT @startValue = '', @startAlpha = '', @startInt = 0 
+     END 
+ 
+   INSERT INTO NumberSequence 
+       (EntityName, CurrentValue, AlphaPart, IntegerPart) 
+   VALUES 
+        (@typeName, @startValue, @startAlpha, @startInt) 
+     
+     SELECT @numSeqID = @@IDENTITY 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[IncrementNumberSequence]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[IncrementNumberSequence]
+    @numSeqID   INT,
+    @saveResult BIT,
+    @newValue   NVARCHAR(60) OUTPUT, 
+    @alphaPart  NVARCHAR(50) OUTPUT, 
+    @intPart    INT           OUTPUT  
+AS 
+BEGIN 
+    DECLARE @newNum NVARCHAR(60) 
+    DECLARE @validSeed BIT 
+    SELECT @newValue = '' 
+    
+    DECLARE @currVal NVARCHAR(60) 
+    DECLARE @currInt INT 
+    SELECT @currVal = CurrentValue, @alphaPart = AlphaPart, @currInt = IntegerPart 
+    FROM NumberSequence  WHERE NumberSequenceID = @numSeqID 
+    
+    DECLARE @baseValue NVARCHAR(60) 
+    EXECUTE ExtractDisplayNumberParts @currVal, @baseValue OUTPUT, @intPart OUTPUT, @validSeed OUTPUT 
+    IF (ISNULL(@intPart, 0) > 0)   
+       BEGIN  
+        SELECT @intPart = @intPart + 1 
+        SELECT @newNum = cast(@intPart as NVARCHAR(60)) 
+        DECLARE @numLeadingZeros INT 
+        DECLARE @tempBaseVal NVARCHAR(60) 
+        SET @tempBaseVal = REPLACE(@baseValue, ' ', 'x') 
+        SELECT @numLeadingZeros = len(ISNULL(@currVal,'')) - len(ISNULL(@tempBaseVal,'')) - len(@newNum) 
+        WHILE @numLeadingZeros > 0 
+        BEGIN 
+           SELECT @newNum = '0' + @newNum 
+           SELECT @numLeadingZeros = @numLeadingZeros - 1 
+        END 
+        
+        SELECT @newValue = @baseValue + @newNum 
+    END   
+    ELSE    
+	BEGIN  
+        IF (ISNULL(@intPart, 0) = 0)   
+			BEGIN    
+			SELECT @newValue = @currVal    
+			IF (LEN(ISNULL(@baseValue, '')) = 0)   
+				BEGIN
+				SELECT @newValue = @baseValue + '1'    
+				SELECT @intPart = 1    
+				END   
+			ELSE   
+				BEGIN   
+				IF ((LEN(ISNULL(@currVal, '')) < 8) AND (RIGHT(@currVal, 1) = '0'))   
+					BEGIN   
+					SELECT @baseValue = SUBSTRING(@currVal, 0, LEN(@currVal)) + '1'   
+					SELECT @intPart = 1    
+					SELECT @newValue = @baseValue   
+				END   
+			END   
+         END 
+    END 
+    
+    IF ISNULL(@saveResult,0) = 1 
+	BEGIN 
+        UPDATE NumberSequence 
+            SET IntegerPart = @intPart 
+                   , CurrentValue = @newValue  
+                   , AlphaPart = @baseValue 
+            WHERE NumberSequenceID = @numSeqID 
+            AND @validSeed = 1  
+    END 
+END
+GO
+/****** Object:  Table [dbo].[TaskPanNodes]    Script Date: 12/30/2015 02:59:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TaskPanNodes](
+	[TaskPan_Id] [int] NOT NULL,
+	[Node_Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Position] [int] NOT NULL,
+ CONSTRAINT [PK_TaskPanNodes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[TaskPanNodes] ON
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 1, 1, 1)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 2, 2, 2)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 3, 3, 3)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 4, 4, 4)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 5, 5, 5)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 6, 6, 6)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 7, 7, 7)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 8, 8, 8)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 9, 9, 1)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 10, 10, 1)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 12, 12, 2)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 14, 14, 2)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 15, 15, 3)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 16, 16, 3)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 17, 17, 4)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 18, 18, 4)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 19, 19, 5)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 20, 20, 6)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 21, 21, 5)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 22, 22, 6)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 23, 23, 1)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 24, 24, 2)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 25, 25, 3)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 26, 26, 4)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 27, 27, 5)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 28, 28, 6)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 30, 29, 9)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 33, 32, 8)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 34, 33, 8)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 37, 36, 10)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 38, 37, 11)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 39, 38, 12)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (2, 40, 39, 8)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (3, 41, 40, 8)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 42, 41, 7)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 43, 42, 8)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 44, 43, 9)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 45, 44, 13)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (1, 46, 45, 14)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 48, 47, 10)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 49, 48, 11)
+INSERT [dbo].[TaskPanNodes] ([TaskPan_Id], [Node_Id], [Id], [Position]) VALUES (5, 50, 49, 12)
+SET IDENTITY_INSERT [dbo].[TaskPanNodes] OFF
+/****** Object:  StoredProcedure [dbo].[SPVehicleReport]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[SPVehicleReport] 
+	
+	@DateFrom nvarchar(100)='',
+	@DateTo nvarchar(100)=''
+AS
+
+  SELECT VehicleRequests.RequestDate as Date,AppUsers.FirstName + ' ' + AppUsers.LastName as Name_of_Requester,VehicleRequests.DepartureDate,VehicleRequests.ReturningDate,Driver.FirstName + '' + Driver.LastName as Driver,CarRentals.Name as Car_Rental,VehicleRequests.RequestNo as Vehicle_Reg_Number,VehicleRequests.NoOfPassengers
+                                From  [dbo].VehicleRequests 
+                                                 Inner join AppUsers on AppUsers.Id = VehicleRequests.AppUser_Id 
+                                                  Inner join VehicleRequestStatuses on VehicleRequests.Id = VehicleRequestStatuses.VehicleRequest_Id
+                                                  Inner join VehicleRequestDetails on VehicleRequests.Id = VehicleRequestDetails.VehicleRequest_Id 
+                                                  Left Join AppUsers as Driver on Driver.Id =VehicleRequestDetails.AppUser_Id
+                                                  Left Join CarRentals on CarRentals.Id = VehicleRequestDetails.CarRental_Id 
+                                                  where VehicleRequests.ProgressStatus = 'Completed' AND
+                                                  1 = Case when @DateFrom = '' and  @DateTo ='' Then 1 When VehicleRequests.RequestDate between @DateFrom and @DateTo Then 1 END
+GO
+/****** Object:  StoredProcedure [dbo].[SetCurrentDisplayValue]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SetCurrentDisplayValue] 
+    @numSeqID INT,           
+    @newValue NVARCHAR(60) OUTPUT, 
+    @Integerpart INT OUTPUT, 
+    @AlphaPart NVARCHAR(50) OUTPUT
+AS  
+BEGIN  
+    DECLARE @validSeed BIT 
+    
+    IF EXISTS( 
+        SELECT Integerpart 
+        FROM NumberSequence  
+        WHERE NumberSequenceID = @numSeqID  
+            AND @AlphaPart = AlphaPart 
+            AND IntegerPart >=  @IntegerPart 
+        ) 
+    BEGIN 
+        DECLARE @RC int 
+        EXEC @RC = IncrementNumberSequence @numSeqID , 1, @newValue OUTPUT , @alphaPart OUTPUT , @IntegerPart OUTPUT  
+    END 
+    ELSE 
+    BEGIN 
+        UPDATE NumberSequence  
+        SET IntegerPart = @Integerpart, AlphaPart = ISNULL(@AlphaPart,''), CurrentValue = @newValue  
+        WHERE NumberSequenceID = @numSeqID  
+            
+      END 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetCurrentDisplayValue]    Script Date: 12/30/2015 02:59:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetCurrentDisplayValue]
+    @numSeqID     INT,                 
+    @currentValue NVARCHAR(60) OUTPUT, 
+    @currentAlpha NVARCHAR(50) OUTPUT, 
+    @currentInt   INT           OUTPUT  
+AS 
+BEGIN 
+   DECLARE @RC INT 
+   EXEC @RC = IncrementNumberSequence @numSeqID , 0, @currentValue OUTPUT , @currentAlpha OUTPUT , @currentInt OUTPUT  
+   IF EXISTS(SELECT DocumentID FROM Document where
+          DocumentDisplayNumber = @currentValue  
+          ) 
+   BEGIN 
+        SELECT @currentInt = MAX(Document.IntegerPart)   
+        FROM Document 
+           SET @currentInt = ISNULL(@currentInt,0) + 1 
+           SET @currentValue  = @currentAlpha + ISNULL(REPLICATE('0',LEN(@currentValue) - LEN(@currentAlpha) - LEN(@currentInt)),'') + CAST(@currentInt AS NVARCHAR(60))  
+        RETURN 
+   END 
+END
+GO
+/****** Object:  ForeignKey [FK_AppUserRole_AppUser]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[AppUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AppUserRole_AppUser] FOREIGN KEY([AppUser_Id])
+REFERENCES [dbo].[AppUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AppUserRoles] CHECK CONSTRAINT [FK_AppUserRole_AppUser]
+GO
+/****** Object:  ForeignKey [FK_AppUserRole_Role]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[AppUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AppUserRole_Role] FOREIGN KEY([Role_Id])
+REFERENCES [dbo].[Roles] ([Id])
+GO
+ALTER TABLE [dbo].[AppUserRoles] CHECK CONSTRAINT [FK_AppUserRole_Role]
+GO
+/****** Object:  ForeignKey [FK_NodeRole_Node]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[NodeRoles]  WITH CHECK ADD  CONSTRAINT [FK_NodeRole_Node] FOREIGN KEY([Node_Id])
+REFERENCES [dbo].[Nodes] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[NodeRoles] CHECK CONSTRAINT [FK_NodeRole_Node]
+GO
+/****** Object:  ForeignKey [FK_NodeRole_Role]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[NodeRoles]  WITH CHECK ADD  CONSTRAINT [FK_NodeRole_Role] FOREIGN KEY([Role_Id])
+REFERENCES [dbo].[Roles] ([Id])
+GO
+ALTER TABLE [dbo].[NodeRoles] CHECK CONSTRAINT [FK_NodeRole_Role]
+GO
+/****** Object:  ForeignKey [FK_PopupMenu_Node]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[PopupMenus]  WITH CHECK ADD  CONSTRAINT [FK_PopupMenu_Node] FOREIGN KEY([Node_Id])
+REFERENCES [dbo].[Nodes] ([Id])
+GO
+ALTER TABLE [dbo].[PopupMenus] CHECK CONSTRAINT [FK_PopupMenu_Node]
+GO
+/****** Object:  ForeignKey [FK_PopupMenu_Tab]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[PopupMenus]  WITH CHECK ADD  CONSTRAINT [FK_PopupMenu_Tab] FOREIGN KEY([Tab_Id])
+REFERENCES [dbo].[Tabs] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PopupMenus] CHECK CONSTRAINT [FK_PopupMenu_Tab]
+GO
+/****** Object:  ForeignKey [FK_TabRole_Role]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[TabRoles]  WITH CHECK ADD  CONSTRAINT [FK_TabRole_Role] FOREIGN KEY([Role_Id])
+REFERENCES [dbo].[Roles] ([Id])
+GO
+ALTER TABLE [dbo].[TabRoles] CHECK CONSTRAINT [FK_TabRole_Role]
+GO
+/****** Object:  ForeignKey [FK_TabRole_Tab]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[TabRoles]  WITH CHECK ADD  CONSTRAINT [FK_TabRole_Tab] FOREIGN KEY([Tab_Id])
+REFERENCES [dbo].[Tabs] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[TabRoles] CHECK CONSTRAINT [FK_TabRole_Tab]
+GO
+/****** Object:  ForeignKey [FK_TaskPanNode_Node]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[TaskPanNodes]  WITH CHECK ADD  CONSTRAINT [FK_TaskPanNode_Node] FOREIGN KEY([Node_Id])
+REFERENCES [dbo].[Nodes] ([Id])
+GO
+ALTER TABLE [dbo].[TaskPanNodes] CHECK CONSTRAINT [FK_TaskPanNode_Node]
+GO
+/****** Object:  ForeignKey [FK_TaskPanNode_TaskPan]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[TaskPanNodes]  WITH CHECK ADD  CONSTRAINT [FK_TaskPanNode_TaskPan] FOREIGN KEY([TaskPan_Id])
+REFERENCES [dbo].[TaskPans] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[TaskPanNodes] CHECK CONSTRAINT [FK_TaskPanNode_TaskPan]
+GO
+/****** Object:  ForeignKey [FK_TaskPan_Tab]    Script Date: 12/30/2015 02:59:40 ******/
+ALTER TABLE [dbo].[TaskPans]  WITH CHECK ADD  CONSTRAINT [FK_TaskPan_Tab] FOREIGN KEY([Tab_Id])
+REFERENCES [dbo].[Tabs] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[TaskPans] CHECK CONSTRAINT [FK_TaskPan_Tab]
+GO

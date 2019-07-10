@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+WARNING: DO NOT MODIFY this file, it is used for the web publish process.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f809ecdd-e1c3-4148-b7bc-dde9af8401cc}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/WorkflowManagment</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SourceWebProject>http://localhost:61090</SourceWebProject>
+    <SourceWebMetabasePath>/IISExpress/7.5/LM/W3SVC/2/ROOT</SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.CoreDomain\Chai.WorkflowManagment.CoreDomain.csproj">
+      <Project>{20C49D35-4CEA-4C93-ACFF-3A570CA2FED7}</Project>
+      <Name>Chai.WorkflowManagment.CoreDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Enums\Chai.WorkflowManagment.Enums.csproj">
+      <Project>{A10D850F-2040-44F8-8A6E-89BA91470FAE}</Project>
+      <Name>Chai.WorkflowManagment.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.ServerControls\Chai.WorkflowManagment.ServerControls.csproj">
+      <Project>{63C11CE1-4190-491B-A3CC-CA21CDFECD73}</Project>
+      <Name>Chai.WorkflowManagment.ServerControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Services\Chai.WorkflowManagment.Services.csproj">
+      <Project>{99145D3D-2B6D-4C6F-98A9-9BC18584BD07}</Project>
+      <Name>Chai.WorkflowManagment.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Chai.WorkflowManagment.Shared\Chai.WorkflowManagment.Shared.csproj">
+      <Project>{3C1C6D3D-633E-442A-BDE0-0D0B9D31FDF2}</Project>
+      <Name>Chai.WorkflowManagment.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Chai.WorkflowManagment.Modules.Admin\Chai.WorkflowManagment.Modules.Admin.csproj">
+      <Project>{1B1467B4-2BF5-4824-9FAC-39C36D4C6C89}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Chai.WorkflowManagment.Modules.Approval\Chai.WorkflowManagment.Modules.Approval.csproj">
+      <Project>{01E5590D-C115-4AFD-802B-05D46F0FE13B}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Approval</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Chai.WorkflowManagment.Modules.Report\Chai.WorkflowManagment.Modules.Report.csproj">
+      <Project>{7B6C15BD-F5D5-40C3-8EAF-54D8A9328E65}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Report</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Chai.WorkflowManagment.Modules.Request\Chai.WorkflowManagment.Modules.Request.csproj">
+      <Project>{88B5EB9E-0FB5-4A23-99BD-F2B3C590F92D}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Request</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Chai.WorkflowManagment.Modules.Setting\Chai.WorkflowManagment.Modules.Setting.csproj">
+      <Project>{6E8E1E43-0C9B-4B03-BB95-BE86D1853CEA}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Setting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Chai.WorkflowManagment.Modules.Shell\Chai.WorkflowManagment.Modules.Shell.csproj">
+      <Project>{B6477755-F019-42BD-B33A-592B65BC6BF9}</Project>
+      <Name>Chai.WorkflowManagment.Modules.Shell</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>
